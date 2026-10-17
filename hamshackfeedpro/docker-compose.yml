@@ -7,8 +7,12 @@
 #   Repository reference: refs/heads/main
 #   Compose path:         hamshackfeedpro/docker-compose.yml
 #
-# pull_policy: build makes "Pull and redeploy" rebuild the image from the new
-# source on GitHub instead of reusing a cached image (same as PropMon).
+# The image is built on GitHub by .github/workflows/build-images.yml and pulled
+# from ghcr.io -- Portainer can't build images on an Agent environment (see the
+# workflow file). To update: change code on GitHub, wait for the "Build images"
+# run to go green (Actions tab, ~1 min), then "Pull and redeploy" the stack.
+# pull_policy: always makes every redeploy fetch the newest image.
+# Rollback: change :latest to an earlier :<short-sha> tag and redeploy.
 #
 # Data: the SQLite database (sources, items, read state) is a bind mount under
 # /srv/docker/hamshackfeedpro/ so the nightly n4misrv backup picks it up
@@ -19,10 +23,8 @@
 
 services:
   hamshackfeedpro:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    pull_policy: build
+    image: ghcr.io/n4mi73/hamshackfeedpro:latest
+    pull_policy: always
     container_name: hamshackfeedpro
     restart: unless-stopped
     ports:

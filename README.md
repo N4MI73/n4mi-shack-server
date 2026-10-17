@@ -16,6 +16,19 @@ work as they are.
 
 ## Deploying (Portainer)
 
+Images are built on GitHub, not on the server. Every push to `main` that
+touches an app folder runs the **Build images** workflow
+(`.github/workflows/build-images.yml`), which publishes:
+
+- `ghcr.io/n4mi73/hamshackfeedpro`
+- `ghcr.io/n4mi73/propdashboard`
+
+Each image is tagged `latest` plus the short commit SHA, for rollback.
+Portainer then only pulls finished images. This is deliberate: Portainer can't
+build images on an Agent-connected environment, where BuildKit fails with
+`failed to list workers ... http2: frame too large`
+([portainer#13255](https://github.com/portainer/portainer/issues/13255)).
+
 Each app is its own stack. In Portainer: **Stacks → Add stack → Repository**
 
 | Setting | HamShackFeed Pro | Propagation Dashboard |
@@ -25,9 +38,15 @@ Each app is its own stack. In Portainer: **Stacks → Add stack → Repository**
 | Compose path | `hamshackfeedpro/docker-compose.yml` | `dashboard/docker-compose.yml` |
 | Environment variables | none | `TEMPEST_TOKEN` (see below) |
 
-After changing code on GitHub, use **Pull and redeploy** on the stack. The
-compose files set `pull_policy: build`, so the image is rebuilt from the new
-source.
+**To update an app:**
+
+1. Change the code on GitHub.
+2. Wait for the **Build images** run to go green (Actions tab, about a minute).
+3. Use **Pull and redeploy** on the stack. The compose files set
+   `pull_policy: always`, so every redeploy fetches the newest image.
+
+**To roll back:** change `:latest` in the compose file to an earlier
+`:<short-sha>` tag and redeploy.
 
 ### Data
 

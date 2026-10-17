@@ -1,7 +1,6 @@
 # HamShackFeed Pro — Dockerfile
-# Built by Portainer's "Repository" stack deployment method directly from
-# github.com/N4MI73/n4mi-shack-server, on the n4misrv environment.
-# No local Docker build step is needed on either Windows computer.
+# Built on GitHub by .github/workflows/build-images.yml and published to
+# ghcr.io; Portainer on n4misrv only pulls the finished image.
 
 FROM python:3.13-slim
 

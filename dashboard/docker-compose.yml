@@ -9,8 +9,12 @@
 #   Environment variables (Portainer only, NEVER in this file or git):
 #     TEMPEST_TOKEN = <Tempest personal access token>
 #
-# pull_policy: build makes "Pull and redeploy" rebuild the image from the new
-# source on GitHub instead of reusing a cached image (same as PropMon).
+# The image is built on GitHub by .github/workflows/build-images.yml and pulled
+# from ghcr.io -- Portainer can't build images on an Agent environment (see the
+# workflow file). To update: change code on GitHub, wait for the "Build images"
+# run to go green (Actions tab, ~1 min), then "Pull and redeploy" the stack.
+# pull_policy: always makes every redeploy fetch the newest image.
+# Rollback: change :latest to an earlier :<short-sha> tag and redeploy.
 #
 # No persistent data: the dashboard keeps its storm-alert state in memory, so
 # there is nothing under /srv/docker for this app and nothing to back up.
@@ -20,10 +24,8 @@
 
 services:
   propdashboard:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    pull_policy: build
+    image: ghcr.io/n4mi73/propdashboard:latest
+    pull_policy: always
     container_name: propdashboard
     restart: unless-stopped
     ports:

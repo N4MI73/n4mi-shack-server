@@ -1,6 +1,6 @@
 # Propagation Dashboard — Dockerfile
-# Built by Portainer's "Repository" stack deployment method directly from
-# github.com/N4MI73/n4mi-shack-server, on the n4misrv environment.
+# Built on GitHub by .github/workflows/build-images.yml and published to
+# ghcr.io; Portainer on n4misrv only pulls the finished image.
 # Standard library only -- no pip install needed.
 
 FROM python:3.13-slim

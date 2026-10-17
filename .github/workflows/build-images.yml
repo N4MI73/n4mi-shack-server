@@ -1,0 +1,65 @@
+# Build the Docker images on GitHub and publish them to GitHub Container Registry
+# (ghcr.io). Portainer on n4misrv then only PULLS finished images.
+#
+# Why: Portainer cannot build images on an Agent-connected environment (n4misrv)
+# -- BuildKit fails with "failed to list workers ... http2: frame too large"
+# (portainer/portainer issue #13255). Building here avoids that entirely.
+#
+# Runs on every push to main that touches an app folder, or by hand from the
+# Actions tab ("Run workflow").
+#
+# Images (tags: latest + the short commit SHA, for rollback):
+#   ghcr.io/n4mi73/hamshackfeedpro
+#   ghcr.io/n4mi73/propdashboard
+
+name: Build images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "hamshackfeedpro/**"
+      - "dashboard/**"
+      - ".github/workflows/build-images.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - folder: hamshackfeedpro
+            image: hamshackfeedpro
+          - folder: dashboard
+            image: propdashboard
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Short SHA
+        id: vars
+        run: echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.folder }}
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ghcr.io/n4mi73/${{ matrix.image }}:latest
+            ghcr.io/n4mi73/${{ matrix.image }}:${{ steps.vars.outputs.sha }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/N4MI73/n4mi-shack-server
