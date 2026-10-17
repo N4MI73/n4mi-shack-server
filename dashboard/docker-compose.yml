@@ -1,0 +1,33 @@
+# Propagation Dashboard — docker-compose.yml
+#
+# Deployed via the NAS Portainer (http://192.168.6.29:9000), environment n4misrv:
+#   Stacks -> Add stack -> Repository
+#   Name:                 propdashboard
+#   Repository URL:       https://github.com/N4MI73/n4mi-shack-server
+#   Repository reference: refs/heads/main
+#   Compose path:         dashboard/docker-compose.yml
+#   Environment variables (Portainer only, NEVER in this file or git):
+#     TEMPEST_TOKEN = <Tempest personal access token>
+#
+# pull_policy: build makes "Pull and redeploy" rebuild the image from the new
+# source on GitHub instead of reusing a cached image (same as PropMon).
+#
+# No persistent data: the dashboard keeps its storm-alert state in memory, so
+# there is nothing under /srv/docker for this app and nothing to back up.
+#
+# Outbound: DXMon /api/adxo on the NAS (http://192.168.6.29:8083) plus
+# HamQSL, Tempest and NWS on the internet.
+
+services:
+  propdashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: build
+    container_name: propdashboard
+    restart: unless-stopped
+    ports:
+      - "8073:8073"
+    environment:
+      - TZ=America/New_York
+      - TEMPEST_TOKEN=${TEMPEST_TOKEN}

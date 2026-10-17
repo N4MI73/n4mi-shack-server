@@ -1,0 +1,8 @@
+# Keep runtime data and Windows-only files out of the image
+*.db
+*.db-wal
+*.db-shm
+custom_sources.json
+import_sources.py
+*.ps1
+__pycache__/

@@ -1,0 +1,33 @@
+# HamShackFeed Pro — docker-compose.yml
+#
+# Deployed via the NAS Portainer (http://192.168.6.29:9000), environment n4misrv:
+#   Stacks -> Add stack -> Repository
+#   Name:                 hamshackfeedpro
+#   Repository URL:       https://github.com/N4MI73/n4mi-shack-server
+#   Repository reference: refs/heads/main
+#   Compose path:         hamshackfeedpro/docker-compose.yml
+#
+# pull_policy: build makes "Pull and redeploy" rebuild the image from the new
+# source on GitHub instead of reusing a cached image (same as PropMon).
+#
+# Data: the SQLite database (sources, items, read state) is a bind mount under
+# /srv/docker/hamshackfeedpro/ so the nightly n4misrv backup picks it up
+# automatically. Do not change this to a named Docker volume -- named volumes
+# are NOT backed up.
+#
+# No secrets: HamShackFeed Pro needs no API keys.
+
+services:
+  hamshackfeedpro:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: build
+    container_name: hamshackfeedpro
+    restart: unless-stopped
+    ports:
+      - "8074:8074"
+    environment:
+      - TZ=America/New_York
+    volumes:
+      - /srv/docker/hamshackfeedpro/data:/data

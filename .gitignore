@@ -1,0 +1,21 @@
+# Runtime data -- lives on the server under /srv/docker/<app>/, never in git
+*.db
+*.db-wal
+*.db-shm
+dashboard.pid
+
+# Secrets -- set in Portainer stack environment variables only
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
