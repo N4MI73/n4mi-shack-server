@@ -1,27 +1,26 @@
-# PropMon Service — docker-compose.yml
+# PropMon -- propagation and tower-alert JSON service (NAS, port 8076)
 #
-# Deployed via Portainer: Stacks -> Add Stack -> Repository
-#   Repository URL:       github.com/N4MI73/streamdeck-hamradio
-#   Repository reference: refs/heads/main
-#   Compose path:         propmon/docker-compose.yml
+# Deployed with Portainer: Stacks -> propmon (NAS environment) -> Repository
+#   Repository URL:  https://github.com/N4MI73/n4mi-shack-server
+#   Reference:       refs/heads/main
+#   Compose path:    propmon/docker-compose.yml
 #
-# pull_policy: build is required so that clicking "Update the stack" in
-# Portainer after editing propmon_server.py on GitHub actually rebuilds the
-# image from the new source, instead of silently reusing a cached image.
-# (Per Portainer's own documentation for standalone Docker environments.)
+# The image is built by GitHub Actions (.github/workflows/build-images.yml) and
+# published to ghcr.io; Portainer only pulls it. pull_policy: always makes
+# "Pull and redeploy" fetch the newest image.
+#
+# TEMPEST_TOKEN: set it in the Portainer stack's environment variables, never
+# here. ${TEMPEST_TOKEN} passes that value into the container. (The old compose
+# file hard-coded "TEMPEST_TOKEN=" as empty, which overrode the Portainer value.)
+# Without a token PropMon still serves band data; tower alerts use NWS only.
 
 services:
   propmon:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    pull_policy: build
+    image: ghcr.io/n4mi73/propmon:latest
+    pull_policy: always
     container_name: propmon
     restart: unless-stopped
     ports:
       - "8076:8076"
     environment:
-      # Fill in with your actual Tempest API token after deploying.
-      # Without it, solar/band data still works fine -- only the
-      # tower/weather alert portion will be unavailable.
-      - TEMPEST_TOKEN=
+      - TEMPEST_TOKEN=${TEMPEST_TOKEN}

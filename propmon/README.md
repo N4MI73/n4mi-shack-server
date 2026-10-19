@@ -9,18 +9,25 @@ of both shack computers, so consumers stay working even when the ham computer's 
 
 ---
 
-## Deploy (Portainer, Repository build method)
+## Deploy (Portainer, prebuilt image)
 
-1. Stacks → Add stack → **Repository**
-2. Repository URL: `https://github.com/N4MI73/streamdeck-hamradio`
+The image is built by GitHub Actions and published as `ghcr.io/n4mi73/propmon`
+(tags `latest` + short commit SHA). Portainer only pulls it.
+
+1. Stacks → Add stack → **Repository** (NAS environment)
+2. Repository URL: `https://github.com/N4MI73/n4mi-shack-server`
 3. Reference: `refs/heads/main`
-4. **Compose path: `propmon/docker-compose.yml`** — this is a subfolder, not repo root
+4. **Compose path: `propmon/docker-compose.yml`**
 5. Environment variables: `TEMPEST_TOKEN` (see below)
-6. GitOps auto-updates: off — update via manual "Pull and redeploy"
+6. GitOps auto-updates: off — update via manual "Pull and redeploy" after the
+   **Build images** run on GitHub goes green
 7. Deploy, then confirm via the health check endpoint
 
-Python 3.12-slim base image. Dependencies (Flask, requests, astral) install automatically from
-`requirements.txt` during the image build — nothing to install by hand.
+Rollback: change `:latest` in the compose file to an earlier `:<short-sha>` tag
+and redeploy.
+
+Moved here from `streamdeck-hamradio/propmon/` on 2026-10-19, with its Git
+history. Until then it was built by Portainer's Repository build method.
 
 ---
 
@@ -30,8 +37,8 @@ Python 3.12-slim base image. Dependencies (Flask, requests, astral) install auto
 |---|---|---|
 | `TEMPEST_TOKEN` | Only for tower/weather alerts | WeatherFlow Tempest API token |
 
-Set this in Portainer's stack environment config, never in the repo — it's read at runtime via
-`os.environ` and deliberately excluded from the codebase. PropMon still runs and serves
+Set this in Portainer's stack environment config, never in the repo. The compose file passes
+it into the container with `TEMPEST_TOKEN=${TEMPEST_TOKEN}`. PropMon still runs and serves
 propagation data without it; tower/weather alerts just stay at `NONE`.
 
 ---
@@ -104,6 +111,11 @@ PropMon's job is ionospheric band condition only.
 
 ## Related Projects
 
+**Consumers of `/api/instrument/propagation`:** the ESP32 instrument below, and the DX Monitor
+server (`dxmon`, NAS port 8083), which reads the band ratings for its condition dots. Keep the
+response shape stable: the firmware expects the same 10-band order every time and a non-empty
+`alerts` array.
+
 **[N4MI Propagation Monitor](https://github.com/N4MI73/n4mi-propagation-monitor)** — an
 ESP32-based desktop hardware instrument (LilyGO T-Encoder Pro, round AMOLED display) that polls
 this service's `/api/instrument/propagation` endpoint to drive a live propagation display. This is
@@ -118,8 +130,8 @@ build status.
 ```
 propmon/
   propmon_server.py    Flask app, background fetch threads, band-rating logic
-  Dockerfile            Python 3.12-slim, builds from requirements.txt
-  docker-compose.yml    Portainer stack definition
+  Dockerfile            Python 3.12-slim, builds from requirements.txt (built by GitHub Actions)
+  docker-compose.yml    Portainer stack definition (pulls ghcr.io/n4mi73/propmon)
   requirements.txt      flask, requests, astral
 ```
 ---

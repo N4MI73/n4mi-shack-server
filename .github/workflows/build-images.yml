@@ -11,6 +11,7 @@
 # Images (tags: latest + the short commit SHA, for rollback):
 #   ghcr.io/n4mi73/hamshackfeedpro
 #   ghcr.io/n4mi73/propdashboard
+#   ghcr.io/n4mi73/propmon        (deployed on the NAS, not n4misrv)
 
 name: Build images
 
@@ -20,6 +21,7 @@ on:
     paths:
       - "hamshackfeedpro/**"
       - "dashboard/**"
+      - "propmon/**"
       - ".github/workflows/build-images.yml"
   workflow_dispatch:
 
@@ -38,6 +40,8 @@ jobs:
             image: hamshackfeedpro
           - folder: dashboard
             image: propdashboard
+          - folder: propmon
+            image: propmon
     steps:
       - uses: actions/checkout@v4
 

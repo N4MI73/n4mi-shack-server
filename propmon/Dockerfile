@@ -1,7 +1,6 @@
-# PropMon Service — Dockerfile
-# Built by Portainer's "Repository" stack deployment method directly from
-# github.com/N4MI73/streamdeck-hamradio — no local Docker build step needed
-# on either Windows computer.
+# PropMon -- Dockerfile
+# Built by GitHub Actions and published as ghcr.io/n4mi73/propmon
+# (see .github/workflows/build-images.yml). Portainer only pulls the image.
 
 FROM python:3.12-slim
 
@@ -15,7 +14,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY propmon_server.py .
 
+ENV PYTHONUNBUFFERED=1
+
 EXPOSE 8076
 
-CMD ["python", "propmon_server.py"]
+# Python as PID 1 ignores SIGTERM; SIGINT gives a clean, fast stop.
+STOPSIGNAL SIGINT
 
+CMD ["python", "propmon_server.py"]

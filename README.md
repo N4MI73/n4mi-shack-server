@@ -13,6 +13,7 @@ work as they are.
 |---|---|---|---|
 | HamShackFeed Pro | `hamshackfeedpro/` | 8074 | Ham radio blogs, podcasts and YouTube channels in one feed, with read state shared across devices (Flask + SQLite) |
 | Propagation Dashboard | `dashboard/` | 8073 | HF + 6m band conditions, solar data, storm/lightning and radio-blackout alerts, active DXpeditions (Python standard library only) |
+| PropMon | `propmon/` | 8076 | Propagation and tower-alert JSON service for the ESP32 desk instrument and DX Monitor; runs on the NAS (Flask). See `propmon/README.md` |
 
 ## Deploying (Portainer)
 
@@ -22,6 +23,7 @@ touches an app folder runs the **Build images** workflow
 
 - `ghcr.io/n4mi73/hamshackfeedpro`
 - `ghcr.io/n4mi73/propdashboard`
+- `ghcr.io/n4mi73/propmon`
 
 Each image is tagged `latest` plus the short commit SHA, for rollback.
 Portainer then only pulls finished images. This is deliberate: Portainer can't
@@ -31,12 +33,13 @@ build images on an Agent-connected environment, where BuildKit fails with
 
 Each app is its own stack. In Portainer: **Stacks → Add stack → Repository**
 
-| Setting | HamShackFeed Pro | Propagation Dashboard |
-|---|---|---|
-| Repository URL | `https://github.com/N4MI73/n4mi-shack-server` | same |
-| Reference | `refs/heads/main` | same |
-| Compose path | `hamshackfeedpro/docker-compose.yml` | `dashboard/docker-compose.yml` |
-| Environment variables | none | `TEMPEST_TOKEN` (see below) |
+| Setting | HamShackFeed Pro | Propagation Dashboard | PropMon |
+|---|---|---|---|
+| Portainer environment | n4misrv | n4misrv | NAS |
+| Repository URL | `https://github.com/N4MI73/n4mi-shack-server` | same | same |
+| Reference | `refs/heads/main` | same | same |
+| Compose path | `hamshackfeedpro/docker-compose.yml` | `dashboard/docker-compose.yml` | `propmon/docker-compose.yml` |
+| Environment variables | none | `TEMPEST_TOKEN` (see below) | `TEMPEST_TOKEN` (its own token) |
 
 **To update an app:**
 
@@ -55,12 +58,12 @@ Each app is its own stack. In Portainer: **Stacks → Add stack → Repository**
   named Docker volume, so host-level backups pick it up. Back up SQLite with
   `sqlite3 .backup` (or Python's `sqlite3` backup API), never by copying the
   live file: recent changes can sit in the `-wal` side file.
-- **Propagation Dashboard** has no persistent data.
+- **Propagation Dashboard** and **PropMon** have no persistent data.
 
 ### Secrets
 
-The dashboard reads a WeatherFlow Tempest token from the `TEMPEST_TOKEN`
-environment variable (Tempest: Settings → Data Authorizations). Set it in the
+The dashboard and PropMon each read a WeatherFlow Tempest token from the
+`TEMPEST_TOKEN` environment variable (use a separate token for each) (Tempest: Settings → Data Authorizations). Set it in the
 Portainer stack's environment variables. **Never commit a token to this repo.**
 Without a token, the storm monitor still runs on NWS alerts alone.
 
