@@ -32,7 +32,7 @@ import logging
 import os
 import threading
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from xml.etree import ElementTree
 
@@ -79,7 +79,7 @@ HTTP_TIMEOUT_SEC = 10
 PORT = 8076
 
 # EM83 station location -- used only for real sunrise/sunset/civil-twilight
-# calculation (see LOW_BANDS section below). Approximate coordinates for
+# calculation (see the band-rating sections below). Approximate coordinates for
 # Grovetown, GA. Not tied to the Tempest station or NWS zone configs above;
 # those are separate identifiers for separate APIs describing the same
 # physical location.
@@ -103,7 +103,9 @@ EM83_LOCATION = LocationInfo("Grovetown", "USA", "America/New_York", 33.45, -82.
 # score = sfi * geo_penalty; band is "good" if score >= goodThresh,
 # "fair" if score >= fairThresh, else "poor".
 #
-# --- 160m/80m time-of-day fix (2026-07-15/16) ---
+# --- 160m/80m time-of-day fix (2026-07-15/16) --- [HISTORY: the fixed-clock
+# get_time_of_day()/get_low_band_tod() described here were replaced by
+# get_band_tod() on 2026-10-19 -- see "Stage 2 engine changes" below.]
 # get_time_of_day() below uses fixed UTC-hour buckets, shared verbatim with
 # the dashboard's JS. For most bands this is fine -- their day/dusk/night
 # thresholds differ gradually, so a seasonal mismatch between the fixed
@@ -136,23 +138,40 @@ EM83_LOCATION = LocationInfo("Grovetown", "USA", "America/New_York", 33.45, -82.
 # summer static on 160m/80m/40m. Dan already knows to expect that
 # seasonally; PropMon's job is ionospheric band condition only.
 
+# --- Stage 2 engine changes (2026-10-19, Dan's decisions) ---
+# 1. 40m-6m: time of day follows the REAL sun at EM83 -- dawn = sunrise
+#    +/-1 h, dusk = sunset +/-1 h, day between, night outside (replaces the
+#    fixed 12-22 UTC clock, which drifted 2+ hours against summer sunset).
+# 2. 12-hour storm recovery: if any 3-hour Kp in the last 12 h was storm
+#    level (>=5), the geomagnetic penalty stays at no better than x0.65.
+# 3. 80m opens at sunset and closes at sunrise ("80m can start working
+#    around dusk"); 160m keeps the civil-twilight switch ("needs total
+#    darkness") and gets stricter night thresholds than 80m.
+# 4. (alerts -- see CAUTION_EVENTS_EXACT below)
+# 5. Finer K tiers aligned with NOAA's G-scale (see get_geo_penalty).
+# Also: 30m now uses the dashboard's on-air-validated thresholds
+# (2026-07-19) instead of the v1 interpolated values.
+# All values are tunable starting points, not measurements.
+
 BAND_ORDER = ["160m", "80m", "40m", "30m", "20m", "17m", "15m", "12m", "10m", "6m"]
 
-# Bands that use real sunrise/sunset (get_low_band_tod) instead of the
-# fixed-clock get_time_of_day(). See fix notes above.
-LOW_BANDS = {"160m", "80m"}
+# 160m: civil dusk/dawn switch. 80m: sunset/sunrise switch. Both use only
+# "day" and "night" thresholds.
+CIVIL_TWILIGHT_BANDS = {"160m"}
+SUNSET_BANDS = {"80m"}
+
+DAWN_DUSK_HALF_WIDTH = timedelta(hours=1)   # decision 1
+RECOVERY_HOURS = 12                          # decision 2
+RECOVERY_STORM_KP = 5                        # G1 and above
+RECOVERY_PENALTY_CAP = 0.65
 
 # { band: { tod: [fairThresh, goodThresh] } }
 BAND_MODELS = {
-    # 160m and 80m only use "day" and "night" now -- see fix notes above.
-    # Threshold values themselves are unchanged from before the fix.
-    "160m": {"day": [999, 999], "night": [60, 80]},
+    "160m": {"day": [999, 999], "night": [80, 100]},   # was [60, 80] -- now stricter than 80m
     "80m":  {"day": [999, 999], "night": [70, 90]},
     "40m":  {"night": [70, 90],  "dawn": [75, 95],   "day": [130, 160], "dusk": [75, 95]},
-    # New addition (not in dashboard) -- interpolated between 40m and 20m's
-    # thresholds at every time of day, following the same pattern as its
-    # neighbors.
-    "30m":  {"night": [82, 107], "dawn": [80, 102],  "day": [105, 132], "dusk": [80, 102]},
+    # 30m: dashboard's validated values (was night 82/107, dawn/dusk 80/102, day 105/132)
+    "30m":  {"night": [75, 95],  "dawn": [75, 95],   "day": [95, 120],  "dusk": [75, 95]},
     "20m":  {"night": [95, 125], "dawn": [85, 110],  "day": [80, 105],  "dusk": [85, 110]},
     "17m":  {"night": [105, 135], "dawn": [95, 120],  "day": [90, 115],  "dusk": [95, 120]},
     "15m":  {"night": [120, 150], "dawn": [110, 140], "day": [105, 135], "dusk": [110, 140]},
@@ -163,63 +182,69 @@ BAND_MODELS = {
 
 
 def get_geo_penalty(k_index: float) -> float:
-    """Geomagnetic penalty multiplier on SFI, ported exactly from the
-    dashboard's rateBand(): kIdx<=2 -> 1.0, kIdx<=4 -> 0.65, else -> 0.25."""
-    if k_index <= 2:
+    """Geomagnetic penalty multiplier on SFI (decision 5, 2026-10-19).
+    K0-2 x1.0, K3 x0.85, K4 x0.65, K5 (G1) x0.45, K6 (G2) x0.30,
+    K7+ (G3-G5) x0.15. Fractional Kp (e.g. 2.67) is rounded first."""
+    k = round(k_index)
+    if k <= 2:
         return 1.0
-    elif k_index <= 4:
+    if k == 3:
+        return 0.85
+    if k == 4:
         return 0.65
-    else:
-        return 0.25
-
-# EM83-tuned time-of-day boundaries (UTC hour) -- used for every band
-# EXCEPT 160m and 80m (see get_low_band_tod below).
-def get_time_of_day(utc_hour: int) -> str:
-    """Mirrors dashboard_server.py's getTimeOfDay(): day 12-22 UTC,
-    dusk 22-1, night 1-11, dawn 11-12."""
-    if 12 <= utc_hour < 22:
-        return "day"
-    elif utc_hour >= 22 or utc_hour < 1:
-        return "dusk"
-    elif 1 <= utc_hour < 11:
-        return "night"
-    else:  # 11 <= utc_hour < 12
-        return "dawn"
+    if k == 5:
+        return 0.45
+    if k == 6:
+        return 0.30
+    return 0.15
 
 
-def get_low_band_tod(now_utc: datetime) -> str:
-    """Real-sun-anchored day/night state for 160m and 80m, replacing the
-    fixed-clock get_time_of_day() for these two bands only (see fix notes
-    above BAND_MODELS). Returns "night" once civil dusk has ended for
-    today's date in EM83 (Grovetown, GA), through to civil dawn the next
-    morning; "day" otherwise.
+def storm_in_recovery_window(kp_history: list, now_utc: datetime) -> bool:
+    """True if any 3-hour Kp reading in the last RECOVERY_HOURS was storm
+    level. kp_history: list of (datetime_utc, kp) from NOAA."""
+    cutoff = now_utc - timedelta(hours=RECOVERY_HOURS)
+    return any(t >= cutoff and round(kp) >= RECOVERY_STORM_KP for t, kp in kp_history)
 
-    Civil dusk/dawn (sun 6 degrees below horizon) rather than sunset/
-    sunrise themselves: cross-checked against Dan's own stated on-air
-    experience (160m/80m need to be genuinely dark, not just dusk, before
-    they reliably open) -- civil dusk end lines up with his reported
-    "160m starts opening ~1800 EDT in winter, ~2100 EDT in summer" to
-    within about 10 minutes at both extremes.
 
-    Uses `astral` (pure-Python, no external API call) so this has no
-    additional runtime dependency risk beyond the package itself.
-    """
+def effective_penalty(k_index: float, kp_history: list, now_utc: datetime) -> float:
+    """Current-K penalty, capped at RECOVERY_PENALTY_CAP during the 12-hour
+    recovery window after a storm (decision 2). The worse of the two wins."""
+    p = get_geo_penalty(k_index)
+    if storm_in_recovery_window(kp_history, now_utc):
+        p = min(p, RECOVERY_PENALTY_CAP)
+    return p
+
+
+def _sun_times(now_utc: datetime) -> dict:
     local_now = now_utc.astimezone(EM83_TZ)
-    s = sun(EM83_LOCATION.observer, date=local_now.date(), tzinfo=EM83_TZ)
-    if local_now < s["dawn"] or local_now >= s["dusk"]:
-        return "night"
-    return "day"
+    return sun(EM83_LOCATION.observer, date=local_now.date(), tzinfo=EM83_TZ)
 
 
-def rate_band(sfi: float, k_index: float, band: str, tod: str) -> str:
-    """Returns 'good', 'fair', or 'poor' for a given band at a given
-    time-of-day, given current SFI and K-index. Ported exactly from the
-    dashboard's rateBand(): geomagnetic penalty multiplies SFI into a
-    single score, compared against the band's fair/good thresholds."""
+def get_band_tod(band: str, now_utc: datetime) -> str:
+    """Time-of-day bucket for one band at EM83 (decisions 1 and 3)."""
+    s = _sun_times(now_utc)
+    now = now_utc.astimezone(EM83_TZ)
+    if band in CIVIL_TWILIGHT_BANDS:
+        # 160m: night from the end of civil dusk to the start of civil dawn.
+        return "night" if (now < s["dawn"] or now >= s["dusk"]) else "day"
+    if band in SUNSET_BANDS:
+        # 80m: night from sunset to sunrise.
+        return "night" if (now < s["sunrise"] or now >= s["sunset"]) else "day"
+    w = DAWN_DUSK_HALF_WIDTH
+    if s["sunrise"] - w <= now < s["sunrise"] + w:
+        return "dawn"
+    if s["sunset"] - w <= now < s["sunset"] + w:
+        return "dusk"
+    if s["sunrise"] + w <= now < s["sunset"] - w:
+        return "day"
+    return "night"
+
+
+def rate_band(sfi: float, penalty: float, band: str, tod: str) -> str:
+    """'good', 'fair' or 'poor': score = SFI x geomagnetic penalty, compared
+    against the band's [fair, good] thresholds for this time of day."""
     fair_thresh, good_thresh = BAND_MODELS[band][tod]
-    geo = get_geo_penalty(k_index)
-    score = sfi * geo
-
+    score = sfi * penalty
     if score >= good_thresh:
         return "good"
     elif score >= fair_thresh:
@@ -246,6 +271,8 @@ _cache = {
     "tower_status": "NONE",
     "alerts": [],
 }
+
+_kp_history = []   # [(datetime_utc, kp)], refreshed by solar_fetch_loop
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger("propmon")
@@ -285,18 +312,44 @@ def fetch_hamqsl():
     }
 
 
-def fetch_noaa_fallback():
-    """Fallback solar data source -- NOAA SWPC planetary K-index.
-    Much sparser than HamQSL; only fills in k_index. Used only if HamQSL
-    is unreachable."""
+def fetch_kp_history():
+    """NOAA SWPC planetary K-index, 3-hour values for the last ~7 days, as a
+    list of (datetime_utc, kp) oldest first.
+
+    Response shape (verified live 2026-10-19): a JSON array of objects, e.g.
+    {"time_tag": "2026-10-18T18:00:00", "Kp": 1.67, "a_running": 6,
+    "station_count": 8}; time_tag is UTC without a suffix. The older
+    array-of-arrays shape (header row first, Kp in column 1) is still
+    accepted, in case NOAA reverts."""
     resp = requests.get(NOAA_KINDEX_URL, timeout=HTTP_TIMEOUT_SEC)
     resp.raise_for_status()
     data = resp.json()
-    # First row is headers; take the most recent data row.
-    if len(data) < 2:
-        raise ValueError("NOAA k-index response had no data rows")
-    last_row = data[-1]
-    k_index = int(float(last_row[1]))
+    out = []
+    for row in data:
+        if isinstance(row, dict):
+            tag, kp = row.get("time_tag"), row.get("Kp")
+        elif isinstance(row, list) and len(row) >= 2:
+            tag, kp = row[0], row[1]
+        else:
+            continue
+        try:
+            t = datetime.fromisoformat(str(tag).replace("Z", "")[:19]).replace(tzinfo=timezone.utc)
+            out.append((t, float(kp)))
+        except (ValueError, TypeError):
+            continue  # header row or malformed entry
+    if not out:
+        raise ValueError("NOAA k-index response had no usable rows")
+    out.sort(key=lambda r: r[0])
+    return out
+
+
+def fetch_noaa_fallback(kp_history=None):
+    """Fallback solar data source -- NOAA SWPC planetary K-index.
+    Much sparser than HamQSL; only fills in k_index. Used only if HamQSL
+    is unreachable. (Fixed 2026-10-19: NOAA had changed the response to an
+    array of objects, which broke the old header-row parser.)"""
+    history = kp_history or fetch_kp_history()
+    k_index = round(history[-1][1])
     return {
         "sfi": None,
         "a_index": None,
@@ -307,7 +360,7 @@ def fetch_noaa_fallback():
     }
 
 
-def build_bands_and_summary(solar: dict):
+def build_bands_and_summary(solar: dict, kp_history=None, now_utc=None):
     """Computes per-band ratings and a short human-readable summary string,
     given current SFI/K-index. The summary mirrors the dashboard HTML's own
     statusRow grouping (e.g. "GOOD: 20m 17m") rather than picking one
@@ -321,14 +374,13 @@ def build_bands_and_summary(solar: dict):
         bands = [{"band": b, "status": "poor"} for b in BAND_ORDER]
         return bands, "Data unavailable"
 
-    now_utc = datetime.now(timezone.utc)
-    standard_tod = get_time_of_day(now_utc.hour)
-    low_band_tod = get_low_band_tod(now_utc)
+    now_utc = now_utc or datetime.now(timezone.utc)
+    penalty = effective_penalty(k_index, kp_history or [], now_utc)
 
     bands = []
     for b in BAND_ORDER:
-        tod = low_band_tod if b in LOW_BANDS else standard_tod
-        bands.append({"band": b, "status": rate_band(sfi, k_index, b, tod)})
+        tod = get_band_tod(b, now_utc)
+        bands.append({"band": b, "status": rate_band(sfi, penalty, b, tod)})
 
     groups = {"good": [], "fair": [], "poor": []}
     for b in bands:
@@ -347,20 +399,29 @@ def solar_fetch_loop():
     """Background thread: refreshes solar/band data every
     SOLAR_FETCH_INTERVAL_SEC seconds, forever."""
     while True:
+        # Kp history drives the 12-hour storm-recovery rule (and the NOAA
+        # fallback). Fetched every cycle; on failure the last good copy is
+        # kept, and with none at all the rule simply doesn't apply.
+        global _kp_history
+        try:
+            _kp_history = fetch_kp_history()
+        except Exception as e:
+            log.warning("NOAA Kp history fetch failed (%s) -- keeping last copy", e)
+
         try:
             solar = fetch_hamqsl()
             log.info("HamQSL fetch OK: SFI=%s K=%s", solar.get("sfi"), solar.get("k_index"))
         except Exception as e:
             log.warning("HamQSL fetch failed (%s), trying NOAA fallback", e)
             try:
-                solar = fetch_noaa_fallback()
+                solar = fetch_noaa_fallback(_kp_history)
                 log.info("NOAA fallback fetch OK: K=%s", solar.get("k_index"))
             except Exception as e2:
                 log.error("NOAA fallback also failed (%s) -- keeping last known-good data", e2)
                 solar = None
 
         if solar is not None:
-            bands, summary = build_bands_and_summary(solar)
+            bands, summary = build_bands_and_summary(solar, _kp_history)
             with _cache_lock:
                 _cache["solar"] = {
                     "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -442,15 +503,35 @@ def fetch_nws_alerts():
 CRITICAL_EVENTS = [
     "Tornado Warning", "Tornado Emergency",
     "Severe Thunderstorm Warning", "Flash Flood Emergency",
+    "Extreme Wind Warning",          # added 2026-10-19 (Dan)
 ]
 WARNING_EVENTS = [
     "Severe Thunderstorm Watch", "Tornado Watch",
     "Flash Flood Warning", "Flash Flood Watch",
+    "High Wind Warning",             # added 2026-10-19 (Dan)
 ]
+# Matched as substrings of the NWS event name.
 CAUTION_EVENTS = [
     "Thunderstorm", "Special Weather Statement",
-    "Dense Fog Advisory", "Wind Advisory",
+    "Dense Fog Advisory",
 ]
+# Matched only as the WHOLE event name (2026-10-19, Dan): "Wind Advisory"
+# must not also match "Lake Wind Advisory", which is not a tower concern at
+# this station (local gusts >= ~35 mph from the Tempest still raise CAUTION).
+CAUTION_EVENTS_EXACT = ["Wind Advisory"]
+
+_LEVEL_RANK = {"NONE": 0, "CAUTION": 1, "WARNING": 2, "CRITICAL": 3}
+
+
+def nws_event_level(ev: str) -> str:
+    """Tower level for one NWS event name."""
+    if any(c in ev for c in CRITICAL_EVENTS):
+        return "CRITICAL"
+    if any(w in ev for w in WARNING_EVENTS):
+        return "WARNING"
+    if any(c in ev for c in CAUTION_EVENTS) or ev in CAUTION_EVENTS_EXACT:
+        return "CAUTION"
+    return "NONE"
 
 
 def classify_tower_status(tempest: dict | None, nws_alerts: list) -> tuple[str, list]:
@@ -462,21 +543,22 @@ def classify_tower_status(tempest: dict | None, nws_alerts: list) -> tuple[str, 
     level = "NONE"
     alerts = []
 
+    # Each NWS alert gets its own level; only matching alerts are listed, and
+    # the overall level is the highest. (Before 2026-10-19 one running level
+    # was reused, so after a first match every later NWS alert was listed
+    # too, labelled with that running level.)
     for alert in nws_alerts:
         ev = alert["event"]
-        if any(c in ev for c in CRITICAL_EVENTS):
-            level = "CRITICAL"
-        elif any(w in ev for w in WARNING_EVENTS) and level != "CRITICAL":
-            level = "WARNING"
-        elif any(c in ev for c in CAUTION_EVENTS) and level not in ("CRITICAL", "WARNING"):
-            level = "CAUTION"
-
-        if level != "NONE":
-            alerts.append({
-                "category": "tower",
-                "level": level,
-                "message": alert.get("headline") or alert.get("event", "Weather alert"),
-            })
+        ev_level = nws_event_level(ev)
+        if ev_level == "NONE":
+            continue
+        if _LEVEL_RANK[ev_level] > _LEVEL_RANK[level]:
+            level = ev_level
+        alerts.append({
+            "category": "tower",
+            "level": ev_level,
+            "message": alert.get("headline") or alert.get("event", "Weather alert"),
+        })
 
     if tempest:
         lightning_km = tempest.get("lightning_km")
