@@ -47,6 +47,7 @@ from flask import Flask, jsonify
 
 HAMQSL_URL = "https://www.hamqsl.com/solarxml.php"
 NOAA_KINDEX_URL = "https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json"
+NOAA_SCALES_URL = "https://services.swpc.noaa.gov/products/noaa-scales.json"
 
 # WeatherFlow Tempest -- station ID per project context (N4MI base context)
 TEMPEST_STATION_ID = "159572"
@@ -273,6 +274,12 @@ _cache = {
 }
 
 _kp_history = []   # [(datetime_utc, kp)], refreshed by solar_fetch_loop
+_kp_history_at = None
+_noaa_scales = None   # refreshed by solar_fetch_loop (v2 only)
+_noaa_scales_at = None
+_last_engine = {}     # per-band time of day and penalty from the last rating
+_weather = {"tempest": None, "nws_alerts": [], "updated": None,
+            "tempest_error": None, "nws_error": None}
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger("propmon")
@@ -309,6 +316,15 @@ def fetch_hamqsl():
         "sunspots": _text("sunspots", int),
         "xray": _text("xray", str),
         "solar_wind": _text("solarwind", float),
+        # v2-only fields (2026-10-20). Element names verified live 2026-10-20;
+        # HamQSL itself spells the electron-flux element "electonflux".
+        "bz": _text("magneticfield", float),
+        "proton_flux": _text("protonflux", float),
+        "electron_flux": _text("electonflux", float),
+        "aurora": _text("aurora", int),
+        "signal_noise": _text("signalnoise", str),
+        "geomag_field": _text("geomagfield", str),
+        "hamqsl_updated": _text("updated", str),
     }
 
 
@@ -360,6 +376,54 @@ def fetch_noaa_fallback(kp_history=None):
     }
 
 
+def _int_or_none(v):
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def fetch_noaa_scales():
+    """NOAA SWPC space-weather scales: R (radio blackouts), S (solar
+    radiation storms), G (geomagnetic storms).
+
+    Response shape (verified live 2026-10-20): an object keyed "-1" (the
+    past 24 hours' maximum), "0" (current) and "1"-"3" (3-day forecast).
+    Each entry: {"DateStamp", "TimeStamp", "R": {"Scale", "Text", "MinorProb",
+    "MajorProb"}, "S": {"Scale", "Text", "Prob"}, "G": {"Scale", "Text"}}.
+    Observed entries carry Scale/Text (probabilities null); forecast entries
+    carry R/S probabilities (Scale/Text null) and a predicted G scale."""
+    resp = requests.get(NOAA_SCALES_URL, timeout=HTTP_TIMEOUT_SEC)
+    resp.raise_for_status()
+    data = resp.json()
+
+    def observed(e):
+        return {
+            "date": e.get("DateStamp"),
+            "time": e.get("TimeStamp"),
+            "R": {"scale": _int_or_none(e["R"].get("Scale")), "text": e["R"].get("Text")},
+            "S": {"scale": _int_or_none(e["S"].get("Scale")), "text": e["S"].get("Text")},
+            "G": {"scale": _int_or_none(e["G"].get("Scale")), "text": e["G"].get("Text")},
+        }
+
+    def forecast(e):
+        return {
+            "date": e.get("DateStamp"),
+            "R": {"minor_prob": _int_or_none(e["R"].get("MinorProb")),
+                  "major_prob": _int_or_none(e["R"].get("MajorProb"))},
+            "S": {"prob": _int_or_none(e["S"].get("Prob"))},
+            "G": {"scale": _int_or_none(e["G"].get("Scale")), "text": e["G"].get("Text")},
+        }
+
+    if "0" not in data:
+        raise ValueError("NOAA scales response missing current entry")
+    return {
+        "past_24h": observed(data["-1"]) if "-1" in data else None,
+        "current": observed(data["0"]),
+        "forecast": [forecast(data[k]) for k in ("1", "2", "3") if k in data],
+    }
+
+
 def build_bands_and_summary(solar: dict, kp_history=None, now_utc=None):
     """Computes per-band ratings and a short human-readable summary string,
     given current SFI/K-index. The summary mirrors the dashboard HTML's own
@@ -378,9 +442,14 @@ def build_bands_and_summary(solar: dict, kp_history=None, now_utc=None):
     penalty = effective_penalty(k_index, kp_history or [], now_utc)
 
     bands = []
+    tods = {}
     for b in BAND_ORDER:
         tod = get_band_tod(b, now_utc)
+        tods[b] = tod
         bands.append({"band": b, "status": rate_band(sfi, penalty, b, tod)})
+    # Extra detail for the v2 endpoint only -- the v1 bands list stays
+    # exactly {"band", "status"}.
+    _last_engine.update({"tods": tods, "penalty": penalty, "computed_at": now_utc})
 
     groups = {"good": [], "fair": [], "poor": []}
     for b in bands:
@@ -402,11 +471,17 @@ def solar_fetch_loop():
         # Kp history drives the 12-hour storm-recovery rule (and the NOAA
         # fallback). Fetched every cycle; on failure the last good copy is
         # kept, and with none at all the rule simply doesn't apply.
-        global _kp_history
+        global _kp_history, _kp_history_at, _noaa_scales, _noaa_scales_at
         try:
             _kp_history = fetch_kp_history()
+            _kp_history_at = datetime.now(timezone.utc)
         except Exception as e:
             log.warning("NOAA Kp history fetch failed (%s) -- keeping last copy", e)
+        try:
+            _noaa_scales = fetch_noaa_scales()
+            _noaa_scales_at = datetime.now(timezone.utc)
+        except Exception as e:
+            log.warning("NOAA scales fetch failed (%s) -- keeping last copy", e)
 
         try:
             solar = fetch_hamqsl()
@@ -431,6 +506,10 @@ def solar_fetch_loop():
                     "sunspots": solar.get("sunspots"),
                     "xray": solar.get("xray"),
                     "solar_wind": solar.get("solar_wind"),
+                    "extra": {k: solar.get(k) for k in (
+                        "bz", "proton_flux", "electron_flux", "aurora",
+                        "signal_noise", "geomag_field", "hamqsl_updated")},
+                    "source": "hamqsl" if solar.get("hamqsl_updated") is not None else "noaa",
                     "bands": bands,
                     "summary": summary,
                 }
@@ -443,6 +522,13 @@ def solar_fetch_loop():
 # ---------------------------------------------------------------------------
 # Tower / weather alert fetch (Tempest + NWS)
 # ---------------------------------------------------------------------------
+
+def _redact(text) -> str:
+    """Remove the Tempest token from error text: a failed request's error
+    message can include the full URL, and the token is a URL parameter."""
+    text = str(text)
+    return text.replace(TEMPEST_TOKEN, "***") if TEMPEST_TOKEN else text
+
 
 def fetch_tempest():
     """Fetch current conditions from WeatherFlow Tempest station, via the
@@ -474,6 +560,7 @@ def fetch_tempest():
         "lightning_1hr": lightning_1hr,
         "wind_gust_mph": round(wind_gust_mps * 2.237, 1) if wind_gust_mps else None,
         "wind_gust_mps": wind_gust_mps,
+        "conditions": cc.get("conditions"),
     }
 
 
@@ -609,17 +696,20 @@ def weather_fetch_loop():
         tempest = None
         nws_alerts = []
         any_success = False
+        tempest_error = nws_error = None
 
         try:
             tempest = fetch_tempest()
             any_success = True
         except Exception as e:
-            log.warning("Tempest fetch failed: %s", e)
+            tempest_error = _redact(e)
+            log.warning("Tempest fetch failed: %s", tempest_error)
 
         try:
             nws_alerts = fetch_nws_alerts()
             any_success = True
         except Exception as e:
+            nws_error = str(e)
             log.warning("NWS alerts fetch failed: %s", e)
 
         if any_success:
@@ -630,6 +720,11 @@ def weather_fetch_loop():
                 ]
                 _cache["alerts"] = existing_propagation_alerts + tower_alerts
                 _cache["tower_status"] = tower_status
+                _weather.update({
+                    "tempest": tempest, "nws_alerts": nws_alerts,
+                    "updated": datetime.now(timezone.utc),
+                    "tempest_error": tempest_error, "nws_error": nws_error,
+                })
             log.info("Weather fetch OK: tower_status=%s", tower_status)
         # else: leave _cache["alerts"]/["tower_status"] untouched -- keep
         # last known-good tower data rather than wiping it on a transient
@@ -666,6 +761,85 @@ def propagation_endpoint():
             "alerts": _cache["alerts"],
             "tower_status": _cache["tower_status"],
         }
+    return jsonify(payload)
+
+
+def _iso(dt):
+    return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ") if dt else None
+
+
+@app.route("/api/v2/conditions", methods=["GET"])
+def conditions_v2():
+    """Richer conditions for the dashboard and future displays (added
+    2026-10-20, Roadmap Stage 2). Additive: /api/instrument/propagation (v1)
+    is unchanged and remains the contract for the ESP32 and DXMon.
+
+    Same band ratings as v1, plus each band's time of day, the geomagnetic
+    penalty and recovery state, recent Kp, sun times at EM83, extra HamQSL
+    fields (Bz, proton/electron flux, aurora, signal noise, geomagnetic field
+    text), NOAA R/S/G scales with the 3-day forecast, and tower/weather
+    detail (alert level, every NWS alert, Tempest readings)."""
+    now = datetime.now(timezone.utc)
+    with _cache_lock:
+        solar = dict(_cache["solar"])
+        alerts = list(_cache["alerts"])
+        tower_status = _cache["tower_status"]
+        engine = dict(_last_engine)
+        weather = dict(_weather)
+        kp_hist = list(_kp_history)
+        kp_at = _kp_history_at
+        scales = _noaa_scales
+        scales_at = _noaa_scales_at
+    if solar.get("updated") is None:
+        return jsonify({"error": "no_data_yet"}), 503
+
+    tods = engine.get("tods", {})
+    storms = [t for t, kp in kp_hist if round(kp) >= RECOVERY_STORM_KP]
+    recovery_ends = (max(storms) + timedelta(hours=RECOVERY_HOURS)) if storms else None
+    s = _sun_times(now)
+    tempest = weather.get("tempest") or {}
+
+    payload = {
+        "version": 2,
+        "updated": solar["updated"],
+        "source": solar.get("source"),
+        "summary": solar.get("summary", "Unknown"),
+        "solar": {
+            "sfi": solar.get("sfi"),
+            "sunspots": solar.get("sunspots"),
+            "a_index": solar.get("a_index"),
+            "k_index": solar.get("k_index"),
+            "xray": solar.get("xray"),
+            "solar_wind": solar.get("solar_wind"),
+            **(solar.get("extra") or {}),
+        },
+        "geomagnetic": {
+            "penalty": engine.get("penalty"),
+            "recovery_active": bool(recovery_ends and recovery_ends > now),
+            "recovery_ends": _iso(recovery_ends) if recovery_ends and recovery_ends > now else None,
+            "kp_recent": [{"time": _iso(t), "kp": kp} for t, kp in kp_hist[-8:]],
+            "kp_updated": _iso(kp_at),
+        },
+        "sun": {
+            "civil_dawn": _iso(s["dawn"]), "sunrise": _iso(s["sunrise"]),
+            "sunset": _iso(s["sunset"]), "civil_dusk": _iso(s["dusk"]),
+        },
+        "bands": [dict(b, tod=tods.get(b["band"])) for b in solar.get("bands", [])],
+        "noaa_scales": dict(scales, updated=_iso(scales_at)) if scales else None,
+        "tower": {
+            "status": tower_status,
+            "alerts": alerts,
+            "nws_alerts": weather.get("nws_alerts", []),
+            "lightning_km": tempest.get("lightning_km"),
+            "lightning_ago_min": tempest.get("lightning_ago_min"),
+            "lightning_1hr": tempest.get("lightning_1hr"),
+            "wind_gust_mph": tempest.get("wind_gust_mph"),
+            "conditions": tempest.get("conditions"),
+            "updated": _iso(weather.get("updated")),
+            "tempest_error": weather.get("tempest_error"),
+            "nws_error": weather.get("nws_error"),
+        },
+    }
     return jsonify(payload)
 
 

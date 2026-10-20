@@ -49,6 +49,7 @@ propagation data without it; tower/weather alerts just stay at `NONE`.
 |---|---|
 | `GET /api/instrument/propagation` | Main data endpoint |
 | `GET /healthz` | Liveness check — `{"status": "ok"}` whenever the process is up, regardless of fetch/data state |
+| `GET /api/v2/conditions` | Richer conditions for the dashboard and future displays (added 2026-10-20). Same ratings as v1 plus each band's time of day, geomagnetic penalty and 12-hour recovery state, recent Kp, sun times, Bz, proton/electron flux, aurora, signal noise, geomagnetic field text, NOAA R/S/G scales with the 3-day forecast, and tower detail (every NWS alert, Tempest readings). Additive — v1 is unchanged |
 
 ### Response shape
 
