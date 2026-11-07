@@ -398,7 +398,7 @@ def recorder_loop():
 # ---------------------------------------------------------------------------
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SWEEP_MODES = {"CW", "SSB", "FT8"}
+SWEEP_MODES = {"SSB", "FT8", "CW"}   # form offers SSB and FT8 (Dan, 2026-11-07); CW still accepted
 SWEEP_HEARD = {"DX", "NA only", "Nothing"}
 
 
@@ -440,7 +440,9 @@ def validate_sweep(body):
     if band not in BAND_NAMES:
         return None, "unknown band"
     if mode not in SWEEP_MODES:
-        return None, "mode must be CW, SSB or FT8"
+        return None, "mode must be SSB or FT8"
+    if mode == "SSB" and band == "30m":
+        return None, "no phone on 30m"
     if heard not in SWEEP_HEARD:
         return None, "heard must be DX, NA only or Nothing"
     def text(k, n):

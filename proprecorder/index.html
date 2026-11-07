@@ -9,7 +9,7 @@
   :root {
     --bg: #090d12; --panel: #0d1520; --border: #1a2d45; --accent: #00d4ff;
     --text: #c8dce8; --muted: #4a6a80; --good: #39ff14; --fair: #ffd700; --poor: #ff4444;
-    --night: #05080c; --bar: #00d4ff; --barlo: #1f3a52; --own: #f472b6;
+    --night: #05080c; --nomon: #5a3a6a; --bar: #00d4ff; --barlo: #1f3a52; --own: #f472b6;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.4 Inter, system-ui, sans-serif; }
@@ -61,6 +61,7 @@
       <span>top strip: PropMon · thin strip: HamQSL (global)</span>
       <span><span class="sw" style="background:var(--bar)"></span>DX stations heard in grid</span>
       <span><span class="sw" style="background:var(--barlo)"></span>all stations heard</span>
+      <span><span class="sw" style="background:var(--nomon)"></span>no receiver in grid on that band</span>
       <span><span class="sw" style="background:var(--own)"></span><span id="mycall">N4MI</span> heard DX</span>
       <span>● your sweeps (green DX · amber NA only · red nothing)</span>
       <span><span class="sw" style="background:var(--night);border:1px solid var(--border)"></span>night at home</span>
@@ -74,24 +75,24 @@
     <div class="row">
       <label>Time <input type="datetime-local" id="sw-time"></label>
       <button id="sw-now">Now</button>
-      <label>Mode <select id="sw-mode"><option>CW</option><option>SSB</option><option>FT8</option></select></label>
+      <label>Mode <select id="sw-mode"><option>SSB</option><option>FT8</option></select></label>
       <label>Antenna <input type="text" id="sw-ant" value="EFHW" size="8"></label>
     </div>
     <div class="sweep-grid" id="sweep-grid"></div>
     <div class="row"><button class="primary" id="sw-save">Save sweep</button><span id="sw-msg" class="status"></span></div>
-    <p class="muted" style="font-size:12px;margin:8px 0 0">Fill only the bands you checked. Time is your computer's local time; it is stored in UTC.</p>
+    <p class="muted" style="font-size:12px;margin:8px 0 0">Fill only the bands you checked. SSB and FT8 only (CW falls between them). 30m is skipped for SSB (no phone there). Time is your computer's local time; it is stored in UTC.</p>
   </section>
 
   <section>
     <h2>HOW WELL DOES EACH RATING MATCH?</h2>
     <div class="table-wrap"><table id="summary"></table></div>
-    <p class="muted" style="font-size:12px;margin:6px 0 0">Median DX stations heard per 15-minute slot, by PropMon's rating at the time, and the share of slots with at least one DX station. If "good" and "fair" look the same for a band, its thresholds are worth a look.</p>
+    <p class="muted" style="font-size:12px;margin:6px 0 0">Median DX stations heard per 15-minute slot, by PropMon's rating at the time, and the share of slots with at least one DX station. Slots with no receiver in the grid on that band are left out. If "good" and "fair" look the same for a band, its thresholds are worth a look.</p>
   </section>
 
   <section>
     <h2>YOUR SWEEPS vs PROPMON</h2>
     <div class="table-wrap"><table id="sweeps"></table></div>
-    <p class="muted" style="font-size:12px;margin:6px 0 0">Working idea, not a decision: DX ≈ good, NA only ≈ fair, nothing ≈ poor. PropMon's rating is taken from the recorded slot nearest the sweep (within 15 minutes).</p>
+    <p class="muted" style="font-size:12px;margin:6px 0 0">Scale (decided 2026-11-07): GOOD = DX on SSB · FAIR = DX on FT8 only, or NA only on SSB · POOR = NA only or nothing even on FT8. A single sweep can allow two ratings (e.g. FT8 DX = good or fair). PropMon's rating is taken from the recorded slot nearest the sweep (within 15 minutes).</p>
   </section>
 </main>
 
@@ -99,7 +100,13 @@
 const BANDS_SWEEP = ['80m','40m','30m','20m','17m','15m','12m','10m'];
 const COLORS = { good: 'var(--good)', fair: 'var(--fair)', poor: 'var(--poor)' };
 const HEARD_COLOR = { 'DX': 'var(--good)', 'NA only': 'var(--fair)', 'Nothing': 'var(--poor)' };
-const EXPECT = { 'DX': 'good', 'NA only': 'fair', 'Nothing': 'poor' };
+// Rating scale (Dan, 2026-11-07): GOOD = DX on SSB; FAIR = DX on FT8 only, or NA only on SSB;
+// POOR = NA only or nothing even on FT8. One sweep alone allows these ratings:
+function allowedRatings(mode, heard) {
+  if (mode === 'SSB') return heard === 'DX' ? ['good'] : heard === 'NA only' ? ['fair'] : ['fair', 'poor'];
+  if (mode === 'FT8') return heard === 'DX' ? ['good', 'fair'] : ['poor'];
+  return heard === 'DX' ? ['good', 'fair'] : heard === 'NA only' ? ['fair', 'poor'] : ['poor'];  // CW (older entries)
+}
 const SLOT_MS = 15 * 60 * 1000;
 const NS = 'http://www.w3.org/2000/svg';
 let DATA = null;
@@ -198,6 +205,11 @@ function renderChart() {
       const hq = slot.sun_up === 0 ? r.hamqsl_night : r.hamqsl_day;
       if (hq) svg.appendChild(el('svg:rect', { x: xs, y: y0 + 11, width: slotW + 0.3, height: 3, fill: COLORS[hq] || 'var(--muted)', opacity: 0.8 }));
       if (r.area_senders === null || r.area_senders === undefined) continue;
+      if (!r.area_receivers) {   // no monitor in the grid on this band: unknown, not "dead"
+        svgTitle(svg.appendChild(el('svg:rect', { x: xs, y: barTop + barH - 2, width: slotW, height: 2, fill: 'var(--nomon)' })),
+          `${band} ${fmtLocal(r.ts)} — no ${DATA.settings.grid} receiver on this band (unknown, not dead)`);
+        continue;
+      }
       const scale = v => Math.sqrt(v / maxAll) * barH;
       const hAll = scale(r.area_senders), dx = dxCount(r, dxkm) || 0, hDx = scale(dx);
       if (hAll > 0) svg.appendChild(el('svg:rect', { x: xs, y: barTop + barH - hAll, width: slotW, height: hAll, fill: 'var(--barlo)' }));
@@ -227,7 +239,7 @@ function renderSummary() {
   for (const band of DATA.settings.band_names) {
     const tr = el('tr'); tr.appendChild(el('td', { class: 'mono' }, band));
     for (const rating of ['good', 'fair', 'poor']) {
-      const vals = DATA.bands.filter(r => r.band === band && r.propmon_status === rating).map(r => dxCount(r, dxkm)).filter(v => v !== null);
+      const vals = DATA.bands.filter(r => r.band === band && r.propmon_status === rating && r.area_receivers > 0).map(r => dxCount(r, dxkm)).filter(v => v !== null);
       const td = el('td', { class: 'mono' });
       if (vals.length) {
         const any = Math.round(100 * vals.filter(v => v > 0).length / vals.length);
@@ -265,7 +277,7 @@ function renderSweeps() {
     tr.appendChild(el('td', {}, sw.region || ''));
     tr.appendChild(el('td', {}, sw.antenna || ''));
     tr.appendChild(el('td', { class: pm || 'muted' }, pm || '—'));
-    const ok = pm ? EXPECT[sw.heard] === pm : null;
+    const ok = pm ? allowedRatings(sw.mode, sw.heard).includes(pm) : null;
     tr.appendChild(el('td', { class: ok === null ? 'muted' : ok ? 'match' : 'miss' }, ok === null ? '—' : ok ? 'yes' : 'no'));
     const td = el('td'); const b = el('button', { 'data-id': sw.id }, 'Delete');
     b.addEventListener('click', delSweep); td.appendChild(b); tr.appendChild(td);
@@ -292,6 +304,15 @@ function buildSweepForm() {
     }
     g.appendChild(el('input', { type: 'text', class: 'region', id: 'r-' + band, placeholder: 'region / note', maxlength: 60 }));
   }
+  document.getElementById('sw-mode').addEventListener('change', syncModeRows);
+  syncModeRows();
+}
+function syncModeRows() {
+  // No phone on 30m: disable that row for SSB.
+  const ssb = document.getElementById('sw-mode').value === 'SSB';
+  document.querySelectorAll('input[name="h-30m"], #r-30m').forEach(i => {
+    i.disabled = ssb; if (ssb) { i.checked = false; if (i.type === 'text') i.value = ''; }
+  });
 }
 function setNow() {
   const d = new Date(); d.setSeconds(0, 0);

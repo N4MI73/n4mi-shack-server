@@ -143,8 +143,17 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
         # Serve only the page itself (and / as a shortcut to it).
         if path in ("/", "/" + PAGE):
             self.path = "/" + PAGE
+            self._page = True
             return super().do_GET()
         self.send_error(404)
+
+    def end_headers(self):
+        # Make browsers check for a newer page every time (a cheap 304 when
+        # unchanged), so an update shows without Ctrl+F5 (2026-11-07: cached
+        # old pages showed ERROR/LOADING against the new server).
+        if getattr(self, "_page", False):
+            self.send_header("Cache-Control", "no-cache")
+        super().end_headers()
 
     def log_message(self, format, *args):
         if "/api/" in str(args[0]):
