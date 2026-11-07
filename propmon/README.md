@@ -49,7 +49,9 @@ propagation data without it; tower/weather alerts just stay at `NONE`.
 |---|---|
 | `GET /api/instrument/propagation` | Main data endpoint |
 | `GET /healthz` | Liveness check — `{"status": "ok"}` whenever the process is up, regardless of fetch/data state |
-| `GET /api/v2/conditions` | Richer conditions for the dashboard and future displays (added 2026-10-20). Same ratings as v1 plus each band's time of day, geomagnetic penalty and 12-hour recovery state, recent Kp, sun times, Bz, proton/electron flux, aurora, signal noise, geomagnetic field text, NOAA R/S/G scales with the 3-day forecast, and tower detail (every NWS alert, Tempest readings). Additive — v1 is unchanged |
+| `GET /api/v2/conditions` | Richer conditions for the dashboard and future displays (added 2026-10-20). Same ratings as v1 plus each band's time of day, geomagnetic penalty and 12-hour recovery state, recent Kp, sun times, Bz, proton/electron flux, aurora, signal noise, geomagnetic field text, NOAA R/S/G scales with the 3-day forecast, and tower detail (every NWS alert, Tempest readings). Additive — v1 is unchanged. Since 2026-11-07 also a top-level `period` (`dawn`/`day`/`dusk`/`night` — the 40m–6m time of day at EM83; 160m and 80m switch only day/night, see `bands[].tod`). On the NOAA fallback (`source: "noaa"`, summary `"Data unavailable"`) the ratings are not usable and `bands[].tod` is null |
+
+**Consumers** (check each before changing an endpoint): the ESP32 Propagation Monitor and DX Monitor (v1); the Ham Ops Console (v1, moving to v2); the Propagation Dashboard on n4misrv (v2, since 2026-11-07); the Propagation Recorder (v2, temporary). The v1 contract: same 10-band order and names, statuses only `good`/`fair`/`poor`, a non-empty `alerts` array, and the fields `updated`, `summary`, `sfi`, `a_index`, `k_index`, `sunspots`, `xray`, `solar_wind` unchanged.
 
 ### Response shape
 

@@ -432,9 +432,13 @@ def build_bands_and_summary(solar: dict, kp_history=None, now_utc=None):
     single band, so neither does PropMon."""
     sfi = solar.get("sfi")
     k_index = solar.get("k_index")
+    now_utc = now_utc or datetime.now(timezone.utc)
 
     if sfi is None or k_index is None:
-        # Not enough data to rate bands meaningfully.
+        # Not enough data to rate bands meaningfully. Clear the v2 detail too,
+        # so v2 doesn't show time-of-day values left over from the last good
+        # rating (v2 "period" then falls back to the current sun position).
+        _last_engine.update({"tods": {}, "penalty": None, "computed_at": now_utc})
         bands = [{"band": b, "status": "poor"} for b in BAND_ORDER]
         return bands, "Data unavailable"
 
@@ -558,7 +562,9 @@ def fetch_tempest():
         "lightning_km": lightning_km,
         "lightning_ago_min": lightning_ago_min,
         "lightning_1hr": lightning_1hr,
-        "wind_gust_mph": round(wind_gust_mps * 2.237, 1) if wind_gust_mps else None,
+        # "is not None": a calm 0 m/s gust is a real reading, not missing
+        # (until 2026-11-07 it came out as null).
+        "wind_gust_mph": round(wind_gust_mps * 2.237, 1) if wind_gust_mps is not None else None,
         "wind_gust_mps": wind_gust_mps,
         "conditions": cc.get("conditions"),
     }
@@ -799,9 +805,17 @@ def conditions_v2():
     s = _sun_times(now)
     tempest = weather.get("tempest") or {}
 
+    # One time-of-day word for the whole page (added 2026-11-07 for the Ham
+    # Ops Console heading and the dashboard): the 40m-6m bucket, which all
+    # those bands share -- dawn, day, dusk or night. 160m and 80m switch only
+    # day/night (see bands[].tod). Taken from the last rating so it matches
+    # the ratings; from the current sun position if there is no rating.
+    period = tods.get("20m") or get_band_tod("20m", now)
+
     payload = {
         "version": 2,
         "updated": solar["updated"],
+        "period": period,
         "source": solar.get("source"),
         "summary": solar.get("summary", "Unknown"),
         "solar": {

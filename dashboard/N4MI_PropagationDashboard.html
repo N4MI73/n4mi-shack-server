@@ -26,6 +26,7 @@
     --band12:   #f472b6;
     --band10:   #fb923c;
     --band6:    #facc15;
+    --band160:  #d6b98c;
   }
 
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -158,6 +159,7 @@
   .band-card.b20::before{background:var(--band20)} .band-card.b17::before{background:var(--band17)}
   .band-card.b15::before{background:var(--band15)} .band-card.b12::before{background:var(--band12)}
   .band-card.b10::before{background:var(--band10)} .band-card.b6::before {background:var(--band6)}
+  .band-card.b160::before{background:var(--band160)}
 
   .band-name { font-family:'Orbitron',monospace; font-size:13px; font-weight:600; margin-left:6px; }
   .band-card.b80 .band-name{color:var(--band80)} .band-card.b40 .band-name{color:var(--band40)}
@@ -165,11 +167,28 @@
   .band-card.b20 .band-name{color:var(--band20)} .band-card.b17 .band-name{color:var(--band17)}
   .band-card.b15 .band-name{color:var(--band15)} .band-card.b12 .band-name{color:var(--band12)}
   .band-card.b10 .band-name{color:var(--band10)} .band-card.b6  .band-name{color:var(--band6)}
+  .band-card.b160 .band-name{color:var(--band160)}
 
   .band-status { font-family:'Share Tech Mono',monospace; font-size:11px; margin-left:6px; margin-top:3px; }
   .band-status.good { color:var(--good); }
   .band-status.fair { color:var(--fair); }
   .band-status.poor { color:var(--poor); }
+  .band-status.none { color:var(--muted); }
+  .band-grid.stale { opacity:0.45; filter:grayscale(0.6); }
+  .status-period { font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:1px; margin-right:6px; align-self:center; }
+  .status-note { font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--muted); align-self:center; }
+  .scales-box { margin-top:10px; border-top:1px solid var(--border); padding-top:8px; }
+  .scales-title { font-family:'Orbitron',monospace; font-size:9px; letter-spacing:2px; color:var(--accent); margin-bottom:6px; }
+  .scales-row { display:flex; align-items:center; gap:5px; margin-bottom:4px; font-family:'Share Tech Mono',monospace; font-size:10px; }
+  .scales-label { color:var(--muted); width:58px; flex-shrink:0; }
+  .scales-fc { color:var(--text); flex:1; }
+  .scale-pill { padding:1px 6px; border:1px solid; font-size:10px; }
+  .scale-pill.good { color:var(--good); border-color:var(--good); }
+  .scale-pill.fair { color:var(--fair); border-color:var(--fair); }
+  .scale-pill.poor { color:var(--poor); border-color:var(--poor); }
+  .scale-pill.none { color:var(--muted); border-color:var(--border); }
+  .scales-note { font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--muted); margin-top:4px; }
+  .scales-note.fair { color:var(--fair); }
   .band-detail { font-size:9px; color:var(--muted); margin-left:6px; margin-top:2px; }
   .data-note { font-size:9px; color:var(--muted); margin-top:8px; font-style:italic; }
 
@@ -332,7 +351,7 @@
 
 <header>
   <div>
-    <div class="callsign">N4MI <span>EM83 &nbsp;·&nbsp; HF + 6M PROPAGATION DASHBOARD <span class="version-tag">v.2026-09-16</span></span></div>
+    <div class="callsign">N4MI <span>EM83 &nbsp;·&nbsp; HF + 6M PROPAGATION DASHBOARD <span class="version-tag">v.2026-11-07</span></span></div>
   </div>
   <div class="header-right">
     <a class="dxmon-btn" href="http://192.168.6.29:8083/" target="_blank">&#9654; DXMON CURATION</a>
@@ -376,6 +395,11 @@
     <div class="solar-sub">km/s</div>
   </div>
   <div class="solar-item">
+    <div class="solar-label">BZ</div>
+    <div class="solar-value" id="bz" style="color:var(--text);font-size:16px">--</div>
+    <div class="solar-sub">nT (&minus; = south)</div>
+  </div>
+  <div class="solar-item">
     <div class="solar-label">GEOMAG</div>
     <div class="solar-value" id="geomagfield" style="font-size:11px;margin-top:6px;color:var(--text)">--</div>
     <div class="solar-sub">Field Status</div>
@@ -393,7 +417,7 @@
   <div class="solar-item">
     <div class="solar-label">STORM STATUS</div>
     <div id="stormPill" class="storm-status-pill storm-status-NONE">ALL CLEAR</div>
-    <div class="solar-sub" id="stormSub">Tempest + NWS</div>
+    <div class="solar-sub" id="stormSub">Tempest + NWS via PropMon</div>
   </div>
   <div class="solar-item">
     <div class="solar-label">RADIO BLACKOUT</div>
@@ -403,7 +427,7 @@
   <div class="solar-item">
     <div class="solar-label">LAST UPDATE</div>
     <div class="solar-value" id="lastUpdate" style="font-size:11px;color:var(--muted);margin-top:4px">--</div>
-    <div class="solar-sub">HamQSL / NOAA</div>
+    <div class="solar-sub">HamQSL via PropMon</div>
   </div>
 </div>
 
@@ -450,7 +474,11 @@
     <div class="panel-title">BAND CONDITIONS · EM83</div>
     <div class="status-row" id="statusRow"><span class="loading">LOADING</span></div>
     <div class="band-grid" id="bandGrid"></div>
-    <p class="data-note">Solar indices from NOAA SWPC. HamQSL widget updated every 3 hours. 80m/40m/30m rated for D-layer absorption during day.</p>
+    <div class="scales-box">
+      <div class="scales-title">NOAA SPACE WEATHER SCALES</div>
+      <div id="scalesBox"><div class="scales-note">Loading&hellip;</div></div>
+    </div>
+    <p class="data-note">Ratings: PropMon, for EM83's time of day. Data: HamQSL, NOAA SWPC.</p>
   </div>
 
   <!-- MUF / Propagation Map (center) -->
@@ -556,214 +584,176 @@ function showTab(name, el) {
 }
 
 // Band config
-const bandColors = {
-  '80m':'var(--band80)','40m':'var(--band40)','30m':'var(--band30)','20m':'var(--band20)','17m':'var(--band17)',
-  '15m':'var(--band15)','12m':'var(--band12)','10m':'var(--band10)','6m':'var(--band6)'
-};
-const bandClass = {'80m':'b80','40m':'b40','30m':'b30','20m':'b20','17m':'b17','15m':'b15','12m':'b12','10m':'b10','6m':'b6'};
+// Since 2026-11-07 (Roadmap Stage 3) the page does no rating of its own: band
+// ratings, time of day and solar data all come from PropMon (NAS :8076) via
+// this server's /api/conditions relay.
+const BAND_ORDER = ['160m','80m','40m','30m','20m','17m','15m','12m','10m','6m'];
+const bandClass = {'160m':'b160','80m':'b80','40m':'b40','30m':'b30','20m':'b20','17m':'b17','15m':'b15','12m':'b12','10m':'b10','6m':'b6'};
 const bandFreqs = {
-  '80m':[3500,4000],'40m':[7000,7300],'30m':[10100,10150],'20m':[14000,14350],'17m':[18068,18168],
+  '160m':[1800,2000],'80m':[3500,4000],'40m':[7000,7300],'30m':[10100,10150],'20m':[14000,14350],'17m':[18068,18168],
   '15m':[21000,21450],'12m':[24890,24990],'10m':[28000,29700],'6m':[50000,54000]
 };
+const TOD_LABEL = { night:'Night', dawn:'Dawn', day:'Day', dusk:'Dusk' };
+const STALE_MIN = 15;     // PropMon fetches every 5 min; three missed fetches = stale
+let lastCond = null;      // last good PropMon response this page received
 
-// Solar data - HamQSL proxy (primary) + NOAA fallback
-async function fetchSolarData() {
-  let sfi=0, ssn=0, kIdx=0, aIdx='--';
+function mk(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined && text !== null) e.textContent = String(text);
+  return e;
+}
+function hhmmUTC(iso) {
+  const t = Date.parse(iso || '');
+  return isNaN(t) ? '--' : new Date(t).toISOString().slice(11,16) + ' UTC';
+}
 
-  // Try HamQSL proxy first (richest data)
+async function fetchConditions() {
+  let err = null;
   try {
-    const hqRes = await fetch('/api/hamqsl');
-    if (hqRes.ok) {
-      const hq = await hqRes.json();
-      if (!hq.error) {
-        sfi   = parseFloat(hq.solarflux) || 0;
-        ssn   = parseFloat(hq.sunspots)  || 0;
-        kIdx  = parseFloat(hq.kindex)    || 0;
-        aIdx  = parseFloat(hq.aindex) >= 0 ? Math.round(parseFloat(hq.aindex)) : '--';
-
-        // Extra fields
-        const xray = hq.xray || '--';
-        const sw   = hq.solarwind ? Math.round(parseFloat(hq.solarwind)) + '' : '--';
-        const geo  = hq.geomagfield || '--';
-        const sn   = hq.signalnoise || '--';
-
-        document.getElementById('xray').textContent      = xray;
-        document.getElementById('solarwind').textContent = sw !== 'NaN' ? sw : '--';
-        document.getElementById('geomagfield').textContent = geo;
-        document.getElementById('signalnoise').textContent = sn;
-
-        // Color X-ray
-        const xEl = document.getElementById('xray');
-        if      (xray.startsWith('X')) xEl.style.color = 'var(--poor)';
-        else if (xray.startsWith('M')) xEl.style.color = 'var(--fair)';
-        else if (xray.startsWith('C')) xEl.style.color = 'var(--accent2)';
-        else                           xEl.style.color = 'var(--good)';
-
-        // Radio blackout alert -- same xray field, classified against NOAA's R-scale
-        updateBlackoutBanner(classifyRadioBlackout(xray), xray);
-
-        // Color solar wind
-        const swVal = parseFloat(sw);
-        const swEl = document.getElementById('solarwind');
-        if      (swVal >= 500) swEl.style.color = 'var(--poor)';
-        else if (swVal >= 400) swEl.style.color = 'var(--fair)';
-        else                   swEl.style.color = 'var(--good)';
-
-        // Update timestamp from HamQSL
-        if (hq.updated) {
-          document.getElementById('lastUpdate').textContent = hq.updated;
-        }
-        console.log('Solar data from HamQSL proxy');
-      }
-    }
-  } catch(e) {
-    console.warn('HamQSL proxy failed, trying NOAA...', e);
+    const res = await fetch('/api/conditions', { cache: 'no-store' });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok || !Array.isArray(j.bands)) throw new Error(j.error || ('HTTP ' + res.status));
+    lastCond = j;
+  } catch (e) {
+    err = e.message || 'PropMon not answering';
+    console.warn('PropMon:', err);
   }
+  renderSolar(lastCond);
+  renderBands(lastCond, err);
+  renderScales(lastCond);
+}
 
-  // NOAA fallback or supplement
-  if (!sfi) {
-    try {
-      const [cycleRes, kRes, aRes] = await Promise.all([
-        fetch('https://services.swpc.noaa.gov/json/solar-cycle/observed-solar-cycle-indices.json'),
-        fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json'),
-        fetch('https://services.swpc.noaa.gov/products/noaa-planetary-a-index.json'),
-      ]);
-      const cycleData = await cycleRes.json();
-      const kData     = await kRes.json();
-      const aData     = await aRes.json();
+function setVal(id, v, color) {
+  const el = document.getElementById(id);
+  el.textContent = (v === null || v === undefined || v === '') ? '--' : v;
+  if (color) el.style.color = color;
+}
 
-      const latest = cycleData[cycleData.length-1];
-      sfi = Math.round(parseFloat(latest['f10.7']) || 0);
-      ssn = Math.round(parseFloat(latest['ssn'])   || 0);
-
-      const kRows   = kData.slice(1);
-      const kLatest = kRows[kRows.length-1];
-      kIdx = parseFloat(kLatest[1]) || 0;
-
-      try {
-        const aRows = Array.isArray(aData) ? aData.slice(1) : [];
-        if (aRows.length) {
-          const aLast = aRows[aRows.length-1];
-          const aVal  = parseFloat(Array.isArray(aLast) ? aLast[1] : aLast.a);
-          if (!isNaN(aVal) && aVal >= 0) aIdx = Math.round(aVal);
-        }
-      } catch(e) {}
-
-      const now = new Date();
-      document.getElementById('lastUpdate').textContent =
-        String(now.getUTCHours()).padStart(2,'0') + ':' + String(now.getUTCMinutes()).padStart(2,'0') + ' UTC';
-
-      console.log('Solar data from NOAA fallback');
-    } catch(e) {
-      console.error('Both solar sources failed:', e);
-      document.getElementById('conditions').textContent = 'ERROR';
-      document.getElementById('condSub').textContent = 'Check network';
-      return;
-    }
+function renderSolar(d) {
+  if (!d) {
+    document.getElementById('conditions').textContent = 'NO DATA';
+    document.getElementById('conditions').style.color = 'var(--poor)';
+    document.getElementById('condSub').textContent = 'PropMon offline';
+    return;
   }
+  const s = d.solar || {};
+  const num = v => (v === null || v === undefined || isNaN(parseFloat(v))) ? null : parseFloat(v);
+  const sfi = num(s.sfi), k = num(s.k_index), a = num(s.a_index), sw = num(s.solar_wind), bz = num(s.bz);
+  const xray = s.xray || '--';
 
-  // Update solar bar
-  document.getElementById('sfi').textContent = sfi || '--';
-  document.getElementById('ssn').textContent = ssn || '--';
-  document.getElementById('aindex').textContent = aIdx;
-  document.getElementById('kindex').textContent = kIdx.toFixed ? kIdx.toFixed(1) : kIdx;
+  setVal('sfi', sfi);
+  setVal('ssn', num(s.sunspots));
+  setVal('aindex', a === null ? null : Math.round(a),
+         a === null ? null : a <= 7 ? 'var(--good)' : a <= 29 ? 'var(--fair)' : 'var(--poor)');
+  setVal('kindex', k === null ? null : k.toFixed(1),
+         k === null ? null : k <= 2 ? 'var(--good)' : k <= 4 ? 'var(--fair)' : 'var(--poor)');
+  setVal('xray', xray,
+         xray.startsWith('X') ? 'var(--poor)' : xray.startsWith('M') ? 'var(--fair)' :
+         xray.startsWith('C') ? 'var(--accent2)' : 'var(--good)');
+  setVal('solarwind', sw === null ? null : Math.round(sw),
+         sw === null ? null : sw >= 500 ? 'var(--poor)' : sw >= 400 ? 'var(--fair)' : 'var(--good)');
+  // Bz (IMF north-south): negative = southward, which lets solar-wind energy
+  // into the magnetosphere. Display only; it doesn't change any rating.
+  setVal('bz', bz === null ? null : (bz > 0 ? '+' : '') + bz.toFixed(1),
+         bz === null ? null : bz >= 0 ? 'var(--good)' : bz > -10 ? 'var(--fair)' : 'var(--poor)');
+  setVal('geomagfield', s.geomag_field);
+  setVal('signalnoise', s.signal_noise);
+  document.getElementById('lastUpdate').textContent = s.hamqsl_updated || hhmmUTC(d.updated);
 
-  const aEl = document.getElementById('aindex');
-  const aVal = parseFloat(aIdx);
-  if (!isNaN(aVal)) aEl.style.color = aVal<=7 ? 'var(--good)' : aVal<=29 ? 'var(--fair)' : 'var(--poor)';
+  // Radio blackout alert -- same xray field, classified against NOAA's R-scale
+  updateBlackoutBanner(classifyRadioBlackout(xray), xray);
 
-  const kEl = document.getElementById('kindex');
-  kEl.style.color = kIdx<=2 ? 'var(--good)' : kIdx<=4 ? 'var(--fair)' : 'var(--poor)';
-
+  // Overall CONDITIONS tile: a quick summary of SFI and K (not a band rating).
   let cond, condColor, condSub;
-  if      (kIdx>=5)               { cond='DISTURBED'; condColor='var(--poor)'; condSub='Geomagnetic storm'; }
-  else if (kIdx<=2 && sfi>=150)   { cond='EXCELLENT'; condColor='var(--good)'; condSub='High flux, quiet geo'; }
-  else if (kIdx<=2 && sfi>=110)   { cond='GOOD';      condColor='var(--good)'; condSub='Favorable conditions'; }
-  else if (kIdx<=3 && sfi>=90)    { cond='FAIR';      condColor='var(--fair)'; condSub='Moderate conditions'; }
-  else                            { cond='POOR';       condColor='var(--poor)'; condSub='Low solar activity'; }
-
+  if (sfi === null || k === null) { cond='--'; condColor='var(--muted)'; condSub='Solar data unavailable'; }
+  else if (k >= 5)                { cond='DISTURBED'; condColor='var(--poor)'; condSub='Geomagnetic storm'; }
+  else if (k <= 2 && sfi >= 150)  { cond='EXCELLENT'; condColor='var(--good)'; condSub='High flux, quiet geo'; }
+  else if (k <= 2 && sfi >= 110)  { cond='GOOD';      condColor='var(--good)'; condSub='Favorable conditions'; }
+  else if (k <= 3 && sfi >= 90)   { cond='FAIR';      condColor='var(--fair)'; condSub='Moderate conditions'; }
+  else                            { cond='POOR';      condColor='var(--poor)'; condSub='Low solar activity'; }
   document.getElementById('conditions').textContent = cond;
   document.getElementById('conditions').style.color = condColor;
   document.getElementById('condSub').textContent    = condSub;
-
-  updateBandConditions(sfi, kIdx);
 }
 
-// ── Band condition model ──────────────────────────────────
-// Properly accounts for D-layer absorption on 80m/40m during daylight.
-// EM83 local noon ~ 17:00-18:00 UTC. Dawn ~11 UTC, dusk ~23 UTC.
-function getTimeOfDay(utcHour) {
-  // Returns: 'night', 'dawn', 'day', 'dusk'
-  if (utcHour >= 12 && utcHour < 22) return 'day';
-  if (utcHour >= 22 || utcHour < 1)  return 'dusk';
-  if (utcHour >= 1  && utcHour < 11) return 'night';
-  return 'dawn'; // 11-12 UTC
-}
-
-function rateBand(sfi, kIdx, band, tod) {
-  // Geomagnetic penalty
-  const geo = kIdx<=2 ? 1.0 : kIdx<=4 ? 0.65 : 0.25;
-
-  // Band models:
-  // Low bands (80/40): excellent at night, poor during day due to D-layer absorption
-  // Mid bands (20/17/15): best during day, depend heavily on SFI
-  // High bands (12/10/6): only open with high SFI, mostly day
-
-  const models = {
-    //          night  dawn   day    dusk   (SFI thresholds for fair/good)
-    '80m': { night:[70,90],  dawn:[80,110], day:[999,999], dusk:[80,110] },
-    '40m': { night:[70,90],  dawn:[75,95],  day:[130,160], dusk:[75,95]  },
-    '30m': { night:[75,95],  dawn:[75,95],  day:[95,120],  dusk:[75,95]  },
-    '20m': { night:[95,125], dawn:[85,110], day:[80,105],  dusk:[85,110] },
-    '17m': { night:[105,135],dawn:[95,120], day:[90,115],  dusk:[95,120] },
-    '15m': { night:[120,150],dawn:[110,140],day:[105,135], dusk:[110,140]},
-    '12m': { night:[140,170],dawn:[130,160],day:[120,150], dusk:[130,160]},
-    '10m': { night:[155,185],dawn:[145,175],day:[130,165], dusk:[145,175]},
-    '6m':  { night:[999,999],dawn:[160,190],day:[150,185], dusk:[160,190]},
-  };
-
-  const [fairThresh, goodThresh] = models[band][tod];
-  const score = sfi * geo;
-
-  if (score >= goodThresh) return 'good';
-  if (score >= fairThresh) return 'fair';
-  return 'poor';
-}
-
-function updateBandConditions(sfi, kIdx) {
-  const utcHour = new Date().getUTCHours();
-  const tod = getTimeOfDay(utcHour);
-  const todLabel = { night:'NIGHT', dawn:'DAWN', day:'DAY', dusk:'DUSK' }[tod];
-
-  const bandIds = ['80m','40m','30m','20m','17m','15m','12m','10m','6m'];
-  const bands = bandIds.map(id => ({
-    id,
-    rating: rateBand(sfi, kIdx, id, tod),
-    // Also compute adjacent period for reference
-    altTod: tod === 'day' ? 'night' : 'day',
-    altRating: rateBand(sfi, kIdx, id, tod === 'day' ? 'night' : 'day'),
-  }));
-
-  const statusRow = document.getElementById('statusRow');
-  statusRow.innerHTML = `<span style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;margin-right:6px">${todLabel}</span>`;
-  ['good','fair','poor'].forEach(r => {
-    const bs = bands.filter(b=>b.rating===r).map(b=>b.id);
-    if (bs.length) statusRow.innerHTML += `<span class="status-pill ${r}">${r.toUpperCase()}: ${bs.join(' ')}</span>`;
-  });
-
+function renderBands(d, err) {
+  const row  = document.getElementById('statusRow');
   const grid = document.getElementById('bandGrid');
-  grid.innerHTML = '';
-  bands.forEach(b => {
-    const card = document.createElement('div');
-    card.className = 'band-card ' + bandClass[b.id];
-    const altLabel = tod==='day' ? 'Night' : 'Day';
-    card.innerHTML = `
-      <span class="band-name">${b.id.toUpperCase()}</span>
-      <div class="band-status ${b.rating}">${b.rating.toUpperCase()}</div>
-      <div class="band-detail">${altLabel}: ${b.altRating} &nbsp;|&nbsp; ${bandFreqs[b.id][0]}-${bandFreqs[b.id][1]} kHz</div>
-    `;
+  row.textContent = ''; grid.textContent = '';
+  grid.classList.remove('stale');
+
+  const unusable = !d || d.source === 'noaa' || d.summary === 'Data unavailable';
+  const ageMin = d ? Math.round((Date.now() - Date.parse(d.updated)) / 60000) : null;
+  const stale = d && !unusable && (err || ageMin > STALE_MIN);
+
+  if (!d) {
+    row.appendChild(mk('span', 'status-pill poor', 'PROPMON OFFLINE'));
+    row.appendChild(mk('span', 'status-note', 'No band ratings until PropMon answers'));
+  } else if (unusable) {
+    row.appendChild(mk('span', 'status-pill poor', 'RATINGS UNAVAILABLE'));
+    row.appendChild(mk('span', 'status-note', 'HamQSL is down; PropMon has K-index only'));
+  } else {
+    if (stale) {
+      grid.classList.add('stale');
+      row.appendChild(mk('span', 'status-pill poor',
+        err ? `PROPMON OFFLINE · LAST DATA ${ageMin} MIN AGO` : `STALE · ${ageMin} MIN`));
+    }
+    row.appendChild(mk('span', 'status-period', (TOD_LABEL[d.period] || '').toUpperCase()));
+    for (const r of ['good', 'fair', 'poor']) {
+      const bs = d.bands.filter(b => b.status === r).map(b => b.band);
+      if (bs.length) row.appendChild(mk('span', 'status-pill ' + r, `${r.toUpperCase()}: ${bs.join(' ')}`));
+    }
+  }
+
+  const byBand = Object.fromEntries((d && !unusable ? d.bands : []).map(b => [b.band, b]));
+  for (const id of BAND_ORDER) {
+    const b = byBand[id];
+    const status = b && ['good','fair','poor'].includes(b.status) ? b.status : null;
+    const card = mk('div', 'band-card ' + bandClass[id]);
+    card.appendChild(mk('span', 'band-name', id.toUpperCase()));
+    card.appendChild(mk('div', 'band-status ' + (status || 'none'), status ? status.toUpperCase() : '--'));
+    const tod = b && TOD_LABEL[b.tod] ? TOD_LABEL[b.tod] + '  |  ' : '';
+    card.appendChild(mk('div', 'band-detail', `${tod}${bandFreqs[id][0]}-${bandFreqs[id][1]} kHz`));
     grid.appendChild(card);
-  });
+  }
+}
+
+function scaleClass(n) { return n === null || n === undefined ? 'none' : n === 0 ? 'good' : n <= 2 ? 'fair' : 'poor'; }
+
+function renderScales(d) {
+  const box = document.getElementById('scalesBox');
+  box.textContent = '';
+  const ns = d && d.noaa_scales;
+  if (!ns || !ns.current) { box.appendChild(mk('div', 'scales-note', 'NOAA scales unavailable')); return; }
+
+  const line = (label, e) => {
+    const r = mk('div', 'scales-row');
+    r.appendChild(mk('span', 'scales-label', label));
+    for (const key of ['R', 'S', 'G']) {
+      const n = e && e[key] ? e[key].scale : null;
+      const p = mk('span', 'scale-pill ' + scaleClass(n), key + (n === null || n === undefined ? '-' : n));
+      if (e && e[key] && e[key].text) p.title = e[key].text;
+      r.appendChild(p);
+    }
+    return r;
+  };
+  box.appendChild(line('NOW', ns.current));
+  if (ns.past_24h) box.appendChild(line('24 H MAX', ns.past_24h));
+  for (const f of ns.forecast || []) {
+    const r = mk('div', 'scales-row');
+    r.appendChild(mk('span', 'scales-label', (f.date || '').slice(5).replace('-', '/')));
+    const pct = v => (v === null || v === undefined) ? '-' : v + '%';
+    r.appendChild(mk('span', 'scales-fc', `R1-2 ${pct(f.R && f.R.minor_prob)} · R3+ ${pct(f.R && f.R.major_prob)} · S1+ ${pct(f.S && f.S.prob)}`));
+    const g = f.G ? f.G.scale : null;
+    r.appendChild(mk('span', 'scale-pill ' + scaleClass(g), 'G' + (g === null || g === undefined ? '-' : g)));
+    box.appendChild(r);
+  }
+  const geo = d.geomagnetic || {};
+  if (geo.recovery_active) {
+    box.appendChild(mk('div', 'scales-note fair',
+      `Storm recovery until ${hhmmUTC(geo.recovery_ends)}: ratings held at x${geo.penalty}`));
+  }
 }
 
 
@@ -789,7 +779,9 @@ function fetchStormStatus() {
       // Update solar bar pill
       pill.className   = 'storm-status-pill storm-status-' + level;
       pill.textContent = (level === 'NONE') ? 'ALL CLEAR' : level;
-      if (data.last_updated) { sub.textContent = 'Updated ' + data.last_updated; }
+      sub.style.color = data.error ? 'var(--poor)' : '';
+      if (data.error) { sub.textContent = data.error + (data.last_updated ? ' (last ' + data.last_updated + ')' : ''); }
+      else if (data.last_updated) { sub.textContent = 'Updated ' + data.last_updated; }
 
       // Build detail lines
       var lines = [];
@@ -824,7 +816,8 @@ function fetchStormStatus() {
         banner.className  = 'storm-banner visible ' + level;
         icon.textContent  = icons[level]  || '(!)';
         title.textContent = titles[level] || 'STORM ALERT';
-        detail.innerHTML  = lines.join('<br>');
+        detail.textContent = '';
+        lines.forEach(function(l, i) { if (i) detail.appendChild(document.createElement('br')); detail.appendChild(document.createTextNode(l)); });
       } else if (level === 'NONE') {
         banner.className = 'storm-banner';
       }
@@ -844,7 +837,7 @@ fetchStormStatus();
 
 
 // ── Radio Blackout Alert ────────────────────────────────
-// Classifies the same xray field already fetched by fetchSolarData() against
+// Classifies the X-ray field (from PropMon, via fetchConditions()) against
 // NOAA's R-scale (radio blackout severity). No separate fetch/poll needed --
 // this runs inline on the existing 5-minute solar refresh cycle. Independent
 // dismiss/escalation state from the storm banner, and its own banner slot, so
@@ -956,7 +949,7 @@ async function loadDXExpeditions() {
 }
 
 function refreshAll() {
-  fetchSolarData();
+  fetchConditions();
   loadDXExpeditions();
 }
 

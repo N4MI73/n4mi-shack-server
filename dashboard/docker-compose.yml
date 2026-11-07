@@ -6,8 +6,10 @@
 #   Repository URL:       https://github.com/N4MI73/n4mi-shack-server
 #   Repository reference: refs/heads/main
 #   Compose path:         dashboard/docker-compose.yml
-#   Environment variables (Portainer only, NEVER in this file or git):
-#     TEMPEST_TOKEN = <Tempest personal access token>
+#   Environment variables: none. (Until 2026-11-07 the dashboard polled
+#   Tempest itself and needed TEMPEST_TOKEN; since Roadmap Stage 3 PropMon
+#   does that. Remove TEMPEST_TOKEN from the Portainer stack and revoke that
+#   token -- PropMon's own token is the only one now.)
 #
 # The image is built on GitHub by .github/workflows/build-images.yml and pulled
 # from ghcr.io -- Portainer can't build images on an Agent environment (see the
@@ -16,11 +18,13 @@
 # pull_policy: always makes every redeploy fetch the newest image.
 # Rollback: change :latest to an earlier :<short-sha> tag and redeploy.
 #
-# No persistent data: the dashboard keeps its storm-alert state in memory, so
-# there is nothing under /srv/docker for this app and nothing to back up.
+# No persistent data: nothing under /srv/docker for this app, nothing to back up.
 #
-# Outbound: DXMon /api/adxo on the NAS (http://192.168.6.29:8083) plus
-# HamQSL, Tempest and NWS on the internet.
+# Outbound (LAN only since 2026-11-07): PropMon on the NAS
+# (http://192.168.6.29:8076/api/v2/conditions -- band ratings, solar data,
+# NOAA scales and storm/tower status) and DXMon /api/adxo
+# (http://192.168.6.29:8083). The browser still loads the HamQSL images and
+# the KC2G map directly from the internet.
 
 services:
   propdashboard:
@@ -32,4 +36,4 @@ services:
       - "8073:8073"
     environment:
       - TZ=America/New_York
-      - TEMPEST_TOKEN=${TEMPEST_TOKEN}
+      - PROPMON_URL=http://192.168.6.29:8076

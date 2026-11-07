@@ -1,191 +1,108 @@
 #!/usr/bin/env python3
 r"""
-Ham Radio Dashboard Server - with Storm Alert Monitor
-Save to: C:\Ham Scripts\dashboard_server.py  (Windows cold spare)
+Ham Radio Dashboard Server
 Runs on n4misrv as a Docker container (see dashboard/docker-compose.yml).
+(Windows cold spare: C:\Ham Scripts\dashboard_server.py -- an older version
+that still polls HamQSL/Tempest/NWS itself.)
 
-The Tempest API token is read from the TEMPEST_TOKEN environment variable --
-NEVER put the real token in this file. On n4misrv it is set in the Portainer
-stack's environment variables. On Windows, set a user environment variable
-named TEMPEST_TOKEN if the cold spare should have lightning/wind data.
-Without a token the storm monitor still runs on NWS alerts alone.
+Since 2026-11-07 (Propagation Engine Roadmap, Stage 3) this server does no
+propagation or weather work of its own. PropMon on the NAS is the single
+engine: this server relays PropMon's /api/v2/conditions to the page and builds
+/api/storm from PropMon's tower data. No Tempest token is needed here any more.
+
+Endpoints:
+  /N4MI_PropagationDashboard.html   the page
+  /api/conditions   PropMon's v2 conditions, relayed (502 if PropMon is down)
+  /api/storm        storm/tower status in the dashboard's original JSON shape
+                    (an external contract; Uptime Kuma checks it)
+  /api/adxo         DXMon's active-DXpedition feed, relayed
 """
 
 import http.server
-import urllib.request
 import json
 import os
-import re
 import threading
 import time
+import urllib.request
 from datetime import datetime, timezone
 
 PORT       = 8073
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PAGE       = "N4MI_PropagationDashboard.html"
+
+# PropMon on the NAS -- the propagation and tower-alert engine.
+PROPMON_URL = os.environ.get("PROPMON_URL", "http://192.168.6.29:8076").rstrip("/")
 
 # ── DXMon ADXO feed (Desktop Instrument Series project, NAS-hosted) ──
 # Undocumented by design in both projects' READMEs -- internal use only,
 # per the confirmed handoff note (2026-09-10). Do not publicize this path.
 DXMON_ADXO_URL = "http://192.168.6.29:8083/api/adxo"
 
-# ── Storm Alert Configuration ─────────────────────────────
-TEMPEST_TOKEN      = os.environ.get("TEMPEST_TOKEN", "").strip()   # never hardcode
-TEMPEST_STATION_ID = "159572"
-NWS_ZONE           = "GAC073"   # Columbia County GA
-CALLSIGN           = "N4MI"
+CACHE_SECONDS = 60      # PropMon itself refreshes every 2-5 minutes
+HTTP_TIMEOUT  = 10
 
-# Alert poll intervals
-NWS_POLL_SECONDS      = 120   # Check NWS every 2 minutes
-TEMPEST_POLL_SECONDS  = 60    # Check Tempest every 1 minute
+# Last good PropMon response, shared by /api/conditions and /api/storm.
+_cache = {"data": None, "fetched": 0.0, "error": None, "tried": 0.0}
+_cache_lock = threading.Lock()
 
-# Lightning thresholds
-LIGHTNING_WARNING_KM  = 40    # Orange alert if lightning within 40km
-LIGHTNING_CAUTION_KM  = 80    # Yellow caution if lightning within 80km
-LIGHTNING_RECENT_MINS = 30    # Consider lightning "recent" if within 30 minutes
 
-# Alert state shared across threads
-alert_state = {
-    "level":          "NONE",      # NONE, CAUTION, WARNING, CRITICAL
-    "nws_alerts":     [],
-    "lightning_km":   None,
-    "lightning_ago":  None,
-    "lightning_1hr":  0,
-    "conditions":     "Unknown",
-    "wind_gust":      None,
-    "last_updated":   None,
-    "error":          None,
-}
-alert_lock = threading.Lock()
-
-# ── Tempest API polling ───────────────────────────────────
-def fetch_tempest():
-    url = (f"https://swd.weatherflow.com/swd/rest/better_forecast"
-           f"?station_id={TEMPEST_STATION_ID}&token={TEMPEST_TOKEN}")
+def fetch_json(url):
     req = urllib.request.Request(url, headers={"User-Agent": "N4MI-Dashboard/1.0"})
-    with urllib.request.urlopen(req, timeout=10) as resp:
+    with urllib.request.urlopen(req, timeout=HTTP_TIMEOUT) as resp:
         return json.loads(resp.read())
 
-def fetch_nws_alerts():
-    url = f"https://api.weather.gov/alerts/active?zone={NWS_ZONE}"
-    req = urllib.request.Request(url, headers={
-        "User-Agent": "N4MI-Dashboard/1.0 N4MI operator",
-        "Accept": "application/json"
-    })
-    with urllib.request.urlopen(req, timeout=10) as resp:
-        return json.loads(resp.read())
 
-def alert_monitor_loop():
-    """Background thread - polls Tempest and NWS, updates alert_state."""
-    print("[STORM MONITOR] Starting alert monitor thread...")
-    while True:
+def get_conditions():
+    """Returns (data, error). data is the last good PropMon v2 response (or
+    None if there has never been one); error is set when the latest attempt
+    failed. Fetches at most once per CACHE_SECONDS."""
+    with _cache_lock:
+        now = time.time()
+        if now - _cache["tried"] >= CACHE_SECONDS:
+            _cache["tried"] = now
+            try:
+                data = fetch_json(PROPMON_URL + "/api/v2/conditions")
+                if "bands" not in data:
+                    raise ValueError(data.get("error") or "unexpected response")
+                _cache.update(data=data, fetched=now, error=None)
+            except Exception as e:
+                _cache["error"] = f"PropMon not answering ({type(e).__name__})"
+                print(f"[PROPMON] {e}")
+        return _cache["data"], _cache["error"]
+
+
+def storm_from_propmon(data, error):
+    """/api/storm in its original shape (unchanged since 2026-10-17), filled
+    from PropMon's v2 tower section. If PropMon can't be reached, the last
+    good values are kept and "error" says so -- the same behavior as the old
+    built-in storm monitor on a failure."""
+    state = {
+        "level": "NONE", "nws_alerts": [], "lightning_km": None, "lightning_ago": None,
+        "lightning_1hr": 0, "conditions": "Unknown", "wind_gust": None,
+        "last_updated": None, "error": error,
+    }
+    tower = (data or {}).get("tower") or {}
+    if tower:
+        updated = tower.get("updated")
         try:
-            now_utc = datetime.now(timezone.utc)
-
-            # ── Fetch Tempest current conditions ─────────────
-            try:
-                if not TEMPEST_TOKEN:
-                    raise RuntimeError("TEMPEST_TOKEN not set -- Tempest skipped, NWS only")
-                tdata = fetch_tempest()
-                cc = tdata.get("current_conditions", {})
-
-                lightning_km   = cc.get("lightning_strike_last_distance")  # km
-                lightning_epoch = cc.get("lightning_strike_last_epoch")     # unix timestamp
-                lightning_1hr  = cc.get("lightning_strike_count_last_1hr", 0) or 0
-                wind_gust      = cc.get("wind_gust")                        # m/s
-                conditions     = cc.get("conditions", "Unknown")
-
-                lightning_ago_min = None
-                if lightning_epoch:
-                    ago = (now_utc.timestamp() - lightning_epoch) / 60
-                    lightning_ago_min = round(ago, 1)
-
-            except Exception as e:
-                print(f"[STORM MONITOR] Tempest error: {e}")
-                lightning_km = lightning_ago_min = lightning_1hr = wind_gust = None
-                conditions = "Error"
-
-            # ── Fetch NWS alerts ─────────────────────────────
-            try:
-                nws_data = fetch_nws_alerts()
-                features = nws_data.get("features", [])
-                nws_alerts = []
-                for f in features:
-                    props = f.get("properties", {})
-                    event    = props.get("event", "")
-                    severity = props.get("severity", "")
-                    headline = props.get("headline", "")
-                    nws_alerts.append({
-                        "event":    event,
-                        "severity": severity,
-                        "headline": headline[:120],
-                    })
-            except Exception as e:
-                print(f"[STORM MONITOR] NWS error: {e}")
-                nws_alerts = []
-
-            # ── Determine alert level ─────────────────────────
-            level = "NONE"
-
-            # NWS critical alerts
-            critical_events = [
-                "Tornado Warning", "Tornado Emergency",
-                "Severe Thunderstorm Warning", "Flash Flood Emergency"
-            ]
-            warning_events = [
-                "Severe Thunderstorm Watch", "Tornado Watch",
-                "Flash Flood Warning", "Flash Flood Watch"
-            ]
-            caution_events = [
-                "Thunderstorm", "Special Weather Statement",
-                "Dense Fog Advisory", "Wind Advisory"
-            ]
-
-            for alert in nws_alerts:
-                ev = alert["event"]
-                if any(c in ev for c in critical_events):
-                    level = "CRITICAL"
-                    break
-                elif any(w in ev for w in warning_events) and level != "CRITICAL":
-                    level = "WARNING"
-                elif any(c in ev for c in caution_events) and level not in ("CRITICAL","WARNING"):
-                    level = "CAUTION"
-
-            # Lightning-based alerts (if no NWS critical alert already)
-            if level != "CRITICAL":
-                if (lightning_km is not None and lightning_ago_min is not None
-                        and lightning_ago_min <= LIGHTNING_RECENT_MINS):
-                    if lightning_km <= LIGHTNING_WARNING_KM:
-                        if level != "WARNING":
-                            level = "WARNING"
-                    elif lightning_km <= LIGHTNING_CAUTION_KM:
-                        if level == "NONE":
-                            level = "CAUTION"
-
-            # High wind gust caution (>15 m/s = ~35mph)
-            if wind_gust and wind_gust >= 15 and level == "NONE":
-                level = "CAUTION"
-
-            # ── Update shared state ───────────────────────────
-            with alert_lock:
-                alert_state["level"]         = level
-                alert_state["nws_alerts"]    = nws_alerts
-                alert_state["lightning_km"]  = lightning_km
-                alert_state["lightning_ago"] = lightning_ago_min
-                alert_state["lightning_1hr"] = lightning_1hr
-                alert_state["conditions"]    = conditions
-                alert_state["wind_gust"]     = round(wind_gust * 2.237, 1) if wind_gust else None  # m/s to mph
-                alert_state["last_updated"]  = now_utc.strftime("%H:%M UTC")
-                alert_state["error"]         = None
-
-            print(f"[STORM MONITOR] Level={level} | Lightning={lightning_km}km/{lightning_ago_min}min ago"
-                  f" | NWS alerts={len(nws_alerts)} | Wind gust={wind_gust}")
-
-        except Exception as e:
-            print(f"[STORM MONITOR] Unexpected error: {e}")
-            with alert_lock:
-                alert_state["error"] = str(e)
-
-        time.sleep(min(NWS_POLL_SECONDS, TEMPEST_POLL_SECONDS))
+            last = datetime.fromisoformat(updated.replace("Z", "+00:00")).strftime("%H:%M UTC")
+        except (AttributeError, ValueError):
+            last = None
+        state.update({
+            "level":         tower.get("status") or "NONE",
+            "nws_alerts":    [{"event": a.get("event", ""), "severity": a.get("severity", ""),
+                               "headline": a.get("headline", "")}
+                              for a in (tower.get("nws_alerts") or [])],
+            "lightning_km":  tower.get("lightning_km"),
+            "lightning_ago": tower.get("lightning_ago_min"),
+            "lightning_1hr": tower.get("lightning_1hr") or 0,
+            "conditions":    tower.get("conditions") or ("Error" if tower.get("tempest_error") else "Unknown"),
+            "wind_gust":     tower.get("wind_gust_mph") or None,   # 0 shown as none, as before
+            "last_updated":  last,
+        })
+    elif error is None:
+        state["error"] = "No tower data from PropMon yet"
+    return state
 
 
 # ── HTTP request handler ──────────────────────────────────
@@ -194,82 +111,40 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=SCRIPT_DIR, **kwargs)
 
+    def _json(self, code, obj):
+        body = json.dumps(obj).encode()
+        self.send_response(code)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self):
+        path = self.path.split("?", 1)[0]
 
-        # Storm alert status endpoint
-        if self.path == "/api/storm":
-            with alert_lock:
-                state_copy = dict(alert_state)
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.end_headers()
-            self.wfile.write(json.dumps(state_copy).encode())
-            return
+        if path == "/api/conditions":
+            data, error = get_conditions()
+            if error or data is None:
+                return self._json(502, {"error": error or "No data from PropMon yet"})
+            return self._json(200, data)
 
-        # HamQSL solar XML proxy
-        if self.path == "/api/hamqsl":
+        if path == "/api/storm":
+            data, error = get_conditions()
+            return self._json(200, storm_from_propmon(data, error))
+
+        if path == "/api/adxo":
             try:
-                req = urllib.request.Request(
-                    "https://www.hamqsl.com/solarxml.php",
-                    headers={"User-Agent": "N4MI-Dashboard/1.0"}
-                )
-                with urllib.request.urlopen(req, timeout=10) as resp:
-                    xml_data = resp.read().decode("utf-8", errors="replace")
-
-                def get_xml(tag, txt):
-                    m = re.search(r"<" + tag + r"[^>]*>(.*?)</" + tag + r">", txt, re.DOTALL)
-                    return m.group(1).strip() if m else ""
-
-                result = {
-                    "solarflux":     get_xml("solarflux",    xml_data),
-                    "aindex":        get_xml("aindex",       xml_data),
-                    "kindex":        get_xml("kindex",       xml_data),
-                    "sunspots":      get_xml("sunspots",     xml_data),
-                    "xray":          get_xml("xray",         xml_data),
-                    "protonflux":    get_xml("protonflux",   xml_data),
-                    "aurora":        get_xml("aurora",       xml_data),
-                    "solarwind":     get_xml("solarwind",    xml_data),
-                    "magneticfield": get_xml("magneticfield",xml_data),
-                    "geomagfield":   get_xml("geomagfield",  xml_data),
-                    "signalnoise":   get_xml("signalnoise",  xml_data),
-                    "updated":       get_xml("updated",      xml_data),
-                    "source":        "hamqsl"
-                }
-                self.send_response(200)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Access-Control-Allow-Origin", "*")
-                self.end_headers()
-                self.wfile.write(json.dumps(result).encode())
+                return self._json(200, fetch_json(DXMON_ADXO_URL))
             except Exception as e:
-                self.send_response(500)
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
-            return
+                return self._json(500, {"error": type(e).__name__})
 
-        # DXMon ADXO feed proxy (active DXpeditions)
-        if self.path == "/api/adxo":
-            try:
-                req = urllib.request.Request(
-                    DXMON_ADXO_URL,
-                    headers={"User-Agent": "N4MI-Dashboard/1.0"}
-                )
-                with urllib.request.urlopen(req, timeout=10) as resp:
-                    data = resp.read()
-                self.send_response(200)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Access-Control-Allow-Origin", "*")
-                self.end_headers()
-                self.wfile.write(data)
-            except Exception as e:
-                self.send_response(500)
-                self.send_header("Content-Type", "application/json")
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": str(e)}).encode())
-            return
-
-        # Serve static files
-        super().do_GET()
+        # Serve only the page itself (and / as a shortcut to it).
+        if path in ("/", "/" + PAGE):
+            self.path = "/" + PAGE
+            return super().do_GET()
+        self.send_error(404)
 
     def log_message(self, format, *args):
         if "/api/" in str(args[0]):
@@ -278,27 +153,11 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
 
 # ── Main ──────────────────────────────────────────────────
 if __name__ == "__main__":
-    os.chdir(SCRIPT_DIR)
-
-    # Start alert monitor in background thread
-    monitor_thread = threading.Thread(target=alert_monitor_loop, daemon=True)
-    monitor_thread.start()
-
-    pid_file = os.path.join(SCRIPT_DIR, "dashboard.pid")
-    with open(pid_file, "w") as f:
-        f.write(str(os.getpid()))
-
     print()
     print(f"  N4MI Ham Radio Dashboard Server")
-    print(f"  Storm Monitor: ACTIVE (Tempest station {TEMPEST_STATION_ID})")
-    print(f"  NWS Zone:      {NWS_ZONE} (Columbia County GA)")
-    print(f"  Dashboard:     http://localhost:{PORT}/N4MI_PropagationDashboard.html")
+    print(f"  Propagation + storm data from PropMon: {PROPMON_URL}")
+    print(f"  Dashboard:     http://localhost:{PORT}/{PAGE}")
     print(f"  Storm API:     http://localhost:{PORT}/api/storm")
-    print(f"  PID file:      {pid_file}")
-    print()
-    print(f"  Tempest token: {'set' if TEMPEST_TOKEN else 'NOT SET (NWS alerts only)'}")
-    print()
-    print(f"  Press Ctrl+C to stop.")
     print()
 
     with http.server.ThreadingHTTPServer(("", PORT), DashboardHandler) as httpd:
@@ -307,6 +166,4 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             pass
         finally:
-            if os.path.exists(pid_file):
-                os.remove(pid_file)
             print("\n  Server stopped. 73!")

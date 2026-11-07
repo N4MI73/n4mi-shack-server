@@ -12,8 +12,8 @@ work as they are.
 | App | Folder | Port | What it does |
 |---|---|---|---|
 | HamShackFeed Pro | `hamshackfeedpro/` | 8074 | Ham radio blogs, podcasts and YouTube channels in one feed, with read state shared across devices (Flask + SQLite) |
-| Propagation Dashboard | `dashboard/` | 8073 | HF + 6m band conditions, solar data, storm/lightning and radio-blackout alerts, active DXpeditions (Python standard library only) |
-| PropMon | `propmon/` | 8076 | Propagation and tower-alert JSON service for the ESP32 desk instrument and DX Monitor; runs on the NAS (Flask). See `propmon/README.md` |
+| Propagation Dashboard | `dashboard/` | 8073 | HF + 6m band conditions, solar data, NOAA space-weather scales, storm/lightning and radio-blackout alerts, active DXpeditions. Displays PropMon's ratings and data (since 2026-11-07); rates nothing itself (Python standard library only) |
+| PropMon | `propmon/` | 8076 | The propagation and tower-alert engine: JSON for the dashboard, the ESP32 desk instrument, DX Monitor and the Ham Ops Console; runs on the NAS (Flask). See `propmon/README.md` |
 | Propagation Recorder | `proprecorder/` | 8088 | **Temporary** (from 2026-11-07): every 15 min records PropMon's and HamQSL's band ratings next to what PSKReporter receivers in EM83 actually heard, plus manual band sweeps, on one chart. For tuning PropMon; to be removed afterwards (Python standard library only) |
 
 ## Deploying (Portainer)
@@ -41,7 +41,7 @@ Each app is its own stack. In Portainer: **Stacks → Add stack → Repository**
 | Repository URL | `https://github.com/N4MI73/n4mi-shack-server` | same | same |
 | Reference | `refs/heads/main` | same | same |
 | Compose path | `hamshackfeedpro/docker-compose.yml` | `dashboard/docker-compose.yml` | `propmon/docker-compose.yml` |
-| Environment variables | none | `TEMPEST_TOKEN` (see below) | `TEMPEST_TOKEN` (its own token) |
+| Environment variables | none | none (`PROPMON_URL` is set in the compose file) | `TEMPEST_TOKEN` (see below) |
 
 **To update an app:**
 
@@ -64,13 +64,16 @@ Each app is its own stack. In Portainer: **Stacks → Add stack → Repository**
 
 ### Secrets
 
-The dashboard and PropMon each read a WeatherFlow Tempest token from the
-`TEMPEST_TOKEN` environment variable (use a separate token for each) (Tempest: Settings → Data Authorizations). Set it in the
+PropMon reads a WeatherFlow Tempest token from the `TEMPEST_TOKEN`
+environment variable (Tempest: Settings → Data Authorizations). Set it in the
 Portainer stack's environment variables. **Never commit a token to this repo.**
-Without a token, the storm monitor still runs on NWS alerts alone.
+Without a token, tower alerts still run on NWS alerts alone. The dashboard
+needs no token: since 2026-11-07 it gets storm and propagation data from
+PropMon (`PROPMON_URL`).
 
-Station-specific values (Tempest station ID, NWS zone, the DXMon address) are
-constants near the top of `dashboard/dashboard_server.py`. Change them for your
+Station-specific values (Tempest station ID, NWS zone, EM83's location and
+the band thresholds) are constants near the top of `propmon/propmon_server.py`;
+the DXMon address is in `dashboard/dashboard_server.py`. Change them for your
 own station.
 
 ## Running without Docker
