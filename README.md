@@ -14,6 +14,7 @@ work as they are.
 | HamShackFeed Pro | `hamshackfeedpro/` | 8074 | Ham radio blogs, podcasts and YouTube channels in one feed, with read state shared across devices (Flask + SQLite) |
 | Propagation Dashboard | `dashboard/` | 8073 | HF + 6m band conditions, solar data, storm/lightning and radio-blackout alerts, active DXpeditions (Python standard library only) |
 | PropMon | `propmon/` | 8076 | Propagation and tower-alert JSON service for the ESP32 desk instrument and DX Monitor; runs on the NAS (Flask). See `propmon/README.md` |
+| Propagation Recorder | `proprecorder/` | 8088 | **Temporary** (from 2026-11-07): every 15 min records PropMon's and HamQSL's band ratings next to what PSKReporter receivers in EM83 actually heard, plus manual band sweeps, on one chart. For tuning PropMon; to be removed afterwards (Python standard library only) |
 
 ## Deploying (Portainer)
 
@@ -24,6 +25,7 @@ touches an app folder runs the **Build images** workflow
 - `ghcr.io/n4mi73/hamshackfeedpro`
 - `ghcr.io/n4mi73/propdashboard`
 - `ghcr.io/n4mi73/propmon`
+- `ghcr.io/n4mi73/proprecorder`
 
 Each image is tagged `latest` plus the short commit SHA, for rollback.
 Portainer then only pulls finished images. This is deliberate: Portainer can't

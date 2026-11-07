@@ -1,0 +1,45 @@
+# Propagation Recorder -- docker-compose.yml (temporary comparison tool)
+#
+# Deployed via the NAS Portainer (http://192.168.6.29:9000), environment n4misrv:
+#   Stacks -> Add stack -> Repository
+#   Name:                 proprecorder
+#   Repository URL:       https://github.com/N4MI73/n4mi-shack-server
+#   Repository reference: refs/heads/main
+#   Compose path:         proprecorder/docker-compose.yml
+#   Environment variables (optional, Portainer only):
+#     PSKR_APPCONTACT = <an email PSKReporter's operator can reach you at>
+#
+# Every 15 minutes it records PropMon's band ratings, HamQSL's global ratings
+# and what PSKReporter receivers in grid EM83 actually heard, and keeps Dan's
+# manual band sweeps. Page: http://192.168.6.30:8088/
+#
+# The image is built on GitHub by .github/workflows/build-images.yml and pulled
+# from ghcr.io. Update: change code on GitHub, wait for the green "Build images"
+# run, then "Pull and redeploy". Rollback: use an earlier :<short-sha> tag.
+#
+# Data: one SQLite file in a bind mount under /srv/docker/proprecorder/, so the
+# nightly n4misrv backup picks it up. Do not change it to a named volume.
+#
+# Outbound: PropMon on the NAS (http://192.168.6.29:8076), hamqsl.com and
+# retrieve.pskreporter.info (one query per 15 minutes; PSKReporter asks for no
+# more than one every 5).
+#
+# Removal when the comparison is done: delete the stack, then the
+# /srv/docker/proprecorder folder (export the CSV first if wanted).
+
+services:
+  proprecorder:
+    image: ghcr.io/n4mi73/proprecorder:latest
+    pull_policy: always
+    container_name: proprecorder
+    restart: unless-stopped
+    ports:
+      - "8088:8088"
+    environment:
+      - TZ=America/New_York
+      - PROPMON_URL=http://192.168.6.29:8076
+      - GRID=EM83
+      - MYCALL=N4MI
+      - PSKR_APPCONTACT=${PSKR_APPCONTACT}
+    volumes:
+      - /srv/docker/proprecorder/data:/data

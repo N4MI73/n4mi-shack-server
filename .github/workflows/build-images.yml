@@ -12,6 +12,7 @@
 #   ghcr.io/n4mi73/hamshackfeedpro
 #   ghcr.io/n4mi73/propdashboard
 #   ghcr.io/n4mi73/propmon        (deployed on the NAS, not n4misrv)
+#   ghcr.io/n4mi73/proprecorder   (temporary propagation comparison, n4misrv)
 
 name: Build images
 
@@ -22,6 +23,7 @@ on:
       - "hamshackfeedpro/**"
       - "dashboard/**"
       - "propmon/**"
+      - "proprecorder/**"
       - ".github/workflows/build-images.yml"
   workflow_dispatch:
 
@@ -42,6 +44,8 @@ jobs:
             image: propdashboard
           - folder: propmon
             image: propmon
+          - folder: proprecorder
+            image: proprecorder
     steps:
       - uses: actions/checkout@v4
 
