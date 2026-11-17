@@ -156,48 +156,78 @@ EM83_LOCATION = LocationInfo("Grovetown", "USA", "America/New_York", 33.45, -82.
 
 BAND_ORDER = ["160m", "80m", "40m", "30m", "20m", "17m", "15m", "12m", "10m", "6m"]
 
-# 160m: civil dusk/dawn switch. 80m: sunset/sunrise switch. Both use only
-# "day" and "night" thresholds.
-CIVIL_TWILIGHT_BANDS = {"160m"}
-SUNSET_BANDS = {"80m"}
+# The rating model -- band thresholds, time-of-day switches and geomagnetic
+# penalties -- lives in rating_model.json beside this file (since 2026-11-17),
+# so the Ham Ops Console's Field Mode engine can use exactly the same numbers.
+# Change the model there and bump its model_version; v2 publishes the version.
+# Path overridable with RATING_MODEL_PATH (tests). A missing or invalid file
+# stops PropMon at startup -- better than serving ratings from a broken model.
 
-DAWN_DUSK_HALF_WIDTH = timedelta(hours=1)   # decision 1
-RECOVERY_HOURS = 12                          # decision 2
-RECOVERY_STORM_KP = 5                        # G1 and above
-RECOVERY_PENALTY_CAP = 0.65
+MODEL_TODS_SUN = {"day", "night"}                      # 160m / 80m
+MODEL_TODS_FULL = {"night", "dawn", "day", "dusk"}     # 40m-6m
 
+
+def load_rating_model(path: str) -> dict:
+    with open(path, encoding="utf-8") as f:
+        m = json.load(f)
+    problems = []
+    if not isinstance(m.get("model_version"), str) or not m["model_version"]:
+        problems.append("model_version missing")
+    tod = m.get("time_of_day", {})
+    geo = m.get("geomagnetic", {})
+    bands = m.get("bands", {})
+    switch_bands = set(tod.get("civil_twilight_bands", [])) | set(tod.get("sunset_bands", []))
+    for band in BAND_ORDER:
+        if band not in bands:
+            problems.append(f"band {band} missing")
+            continue
+        want = MODEL_TODS_SUN if band in switch_bands else MODEL_TODS_FULL
+        if set(bands[band]) != want:
+            problems.append(f"band {band}: periods must be {sorted(want)}")
+            continue
+        for t, pair in bands[band].items():
+            if (not isinstance(pair, list) or len(pair) != 2
+                    or not all(isinstance(x, (int, float)) for x in pair) or pair[0] > pair[1]):
+                problems.append(f"band {band} {t}: need [fair, good] with fair <= good")
+    tiers = geo.get("k_tiers", {})
+    vals = [tiers.get(str(k)) for k in range(8)]
+    if (any(not isinstance(v, (int, float)) or not 0 < v <= 1 for v in vals)
+            or any(a < b for a, b in zip(vals, vals[1:]))):
+        problems.append("k_tiers: need keys 0-7, values in (0, 1], never rising with K")
+    for key in ("recovery_hours", "recovery_storm_kp", "recovery_penalty_cap"):
+        if not isinstance(geo.get(key), (int, float)):
+            problems.append(f"geomagnetic.{key} missing")
+    if not isinstance(tod.get("dawn_dusk_half_width_hours"), (int, float)):
+        problems.append("time_of_day.dawn_dusk_half_width_hours missing")
+    if problems:
+        raise ValueError(f"Invalid rating model {path}: " + "; ".join(problems))
+    return m
+
+
+RATING_MODEL_PATH = os.environ.get(
+    "RATING_MODEL_PATH",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "rating_model.json"))
+RATING_MODEL = load_rating_model(RATING_MODEL_PATH)
+MODEL_VERSION = RATING_MODEL["model_version"]
+
+# Names kept from before the model file, so the rest of the code is unchanged.
+CIVIL_TWILIGHT_BANDS = set(RATING_MODEL["time_of_day"]["civil_twilight_bands"])
+SUNSET_BANDS = set(RATING_MODEL["time_of_day"]["sunset_bands"])
+DAWN_DUSK_HALF_WIDTH = timedelta(hours=RATING_MODEL["time_of_day"]["dawn_dusk_half_width_hours"])
+RECOVERY_HOURS = RATING_MODEL["geomagnetic"]["recovery_hours"]
+RECOVERY_STORM_KP = RATING_MODEL["geomagnetic"]["recovery_storm_kp"]
+RECOVERY_PENALTY_CAP = RATING_MODEL["geomagnetic"]["recovery_penalty_cap"]
+K_TIERS = {int(k): float(v) for k, v in RATING_MODEL["geomagnetic"]["k_tiers"].items()}
 # { band: { tod: [fairThresh, goodThresh] } }
-BAND_MODELS = {
-    "160m": {"day": [999, 999], "night": [80, 100]},   # was [60, 80] -- now stricter than 80m
-    "80m":  {"day": [999, 999], "night": [70, 90]},
-    "40m":  {"night": [70, 90],  "dawn": [75, 95],   "day": [130, 160], "dusk": [75, 95]},
-    # 30m: dashboard's validated values (was night 82/107, dawn/dusk 80/102, day 105/132)
-    "30m":  {"night": [75, 95],  "dawn": [75, 95],   "day": [95, 120],  "dusk": [75, 95]},
-    "20m":  {"night": [95, 125], "dawn": [85, 110],  "day": [80, 105],  "dusk": [85, 110]},
-    "17m":  {"night": [105, 135], "dawn": [95, 120],  "day": [90, 115],  "dusk": [95, 120]},
-    "15m":  {"night": [120, 150], "dawn": [110, 140], "day": [105, 135], "dusk": [110, 140]},
-    "12m":  {"night": [140, 170], "dawn": [130, 160], "day": [120, 150], "dusk": [130, 160]},
-    "10m":  {"night": [155, 185], "dawn": [145, 175], "day": [130, 165], "dusk": [145, 175]},
-    "6m":   {"night": [999, 999], "dawn": [160, 190], "day": [150, 185], "dusk": [160, 190]},
-}
+BAND_MODELS = RATING_MODEL["bands"]
 
 
 def get_geo_penalty(k_index: float) -> float:
-    """Geomagnetic penalty multiplier on SFI (decision 5, 2026-10-19).
-    K0-2 x1.0, K3 x0.85, K4 x0.65, K5 (G1) x0.45, K6 (G2) x0.30,
-    K7+ (G3-G5) x0.15. Fractional Kp (e.g. 2.67) is rounded first."""
-    k = round(k_index)
-    if k <= 2:
-        return 1.0
-    if k == 3:
-        return 0.85
-    if k == 4:
-        return 0.65
-    if k == 5:
-        return 0.45
-    if k == 6:
-        return 0.30
-    return 0.15
+    """Geomagnetic penalty multiplier on SFI, from the model's k_tiers
+    (K0..K7, K7 also used above 7). Fractional Kp (e.g. 2.67) is rounded
+    first."""
+    k = min(max(int(round(k_index)), 0), 7)
+    return K_TIERS[k]
 
 
 def storm_in_recovery_window(kp_history: list, now_utc: datetime) -> bool:
@@ -816,6 +846,10 @@ def conditions_v2():
         "version": 2,
         "updated": solar["updated"],
         "period": period,
+        # Which rating model produced these ratings (added 2026-11-17), so a
+        # copy of the model elsewhere (Ham Ops Console Field Mode) can tell
+        # when it is out of date.
+        "model_version": MODEL_VERSION,
         "source": solar.get("source"),
         "summary": solar.get("summary", "Unknown"),
         "solar": {
