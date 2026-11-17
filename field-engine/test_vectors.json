@@ -1,0 +1,9152 @@
+{
+ "model_version": "2026-11-17-v3",
+ "note": "EM83 cases were checked against PropMon's own code (identical). 'elsewhere' cases are the reference engine's own output, for regression only.",
+ "em83": {
+  "lat": 33.45,
+  "lon": -82.19,
+  "tz": "America/New_York",
+  "cases": [
+   {
+    "when_utc": "2026-01-01T00:00:00Z",
+    "sfi": 130,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2025-12-31T21:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T18:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T15:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T12:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T09:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T06:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T03:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T00:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-01T02:00:00Z",
+    "sfi": 190,
+    "k_index": 1,
+    "kp_history": [
+     [
+      "2025-12-31T23:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T20:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T17:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T14:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T11:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T08:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T05:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T02:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-01T06:00:00Z",
+    "sfi": 70,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-01-01T03:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-01T00:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T21:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T18:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T15:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T12:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T09:00:00Z",
+      1.67
+     ],
+     [
+      "2025-12-31T06:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-10T10:00:00Z",
+    "sfi": 105,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2026-01-10T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-10T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-10T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-09T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-09T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-09T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-09T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-09T10:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-10T23:05:54.811053Z",
+    "sfi": 105,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-01-10T20:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T17:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T14:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T11:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T08:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T05:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T02:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-09T23:05:54.811053Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-11T00:05:54.811053Z",
+    "sfi": 122,
+    "k_index": 8,
+    "kp_history": [
+     [
+      "2026-01-10T21:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T18:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T15:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T12:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T09:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T06:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T03:05:54.811053Z",
+      1.67
+     ],
+     [
+      "2026-01-10T00:05:54.811053Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-19T04:00:00Z",
+    "sfi": 190,
+    "k_index": 7,
+    "kp_history": [
+     [
+      "2026-01-19T01:00:00Z",
+      5.33
+     ],
+     [
+      "2026-01-18T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-18T19:00:00Z",
+      5.33
+     ],
+     [
+      "2026-01-18T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-18T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-18T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-18T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-18T04:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-28T12:00:00Z",
+    "sfi": 122,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-01-28T09:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T06:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T03:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T00:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-27T21:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-27T18:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-27T15:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-27T12:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-28T18:00:00Z",
+    "sfi": 190,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-01-28T15:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T12:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T09:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T06:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T03:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T00:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-27T21:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-27T18:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "fair",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-28T20:00:00Z",
+    "sfi": 145,
+    "k_index": 8,
+    "kp_history": [
+     [
+      "2026-01-28T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T14:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-28T02:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-27T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-01-27T20:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-28T12:01:46.593967Z",
+    "sfi": 160,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-01-28T09:01:46.593967Z",
+      1.67
+     ],
+     [
+      "2026-01-28T06:01:46.593967Z",
+      1.67
+     ],
+     [
+      "2026-01-28T03:01:46.593967Z",
+      1.67
+     ],
+     [
+      "2026-01-28T00:01:46.593967Z",
+      1.67
+     ],
+     [
+      "2026-01-27T21:01:46.593967Z",
+      1.67
+     ],
+     [
+      "2026-01-27T18:01:46.593967Z",
+      1.67
+     ],
+     [
+      "2026-01-27T15:01:46.593967Z",
+      1.67
+     ],
+     [
+      "2026-01-27T12:01:46.593967Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-01-28T12:26:33.220639Z",
+    "sfi": 90,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-01-28T09:26:33.220639Z",
+      1.67
+     ],
+     [
+      "2026-01-28T06:26:33.220639Z",
+      1.67
+     ],
+     [
+      "2026-01-28T03:26:33.220639Z",
+      1.67
+     ],
+     [
+      "2026-01-28T00:26:33.220639Z",
+      5.33
+     ],
+     [
+      "2026-01-27T21:26:33.220639Z",
+      1.67
+     ],
+     [
+      "2026-01-27T18:26:33.220639Z",
+      1.67
+     ],
+     [
+      "2026-01-27T15:26:33.220639Z",
+      1.67
+     ],
+     [
+      "2026-01-27T12:26:33.220639Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-02-06T06:00:00Z",
+    "sfi": 115,
+    "k_index": 4.67,
+    "kp_history": [
+     [
+      "2026-02-06T03:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-06T00:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-05T21:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-05T18:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-05T15:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-05T12:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-05T09:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-05T06:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-02-06T23:03:57.415806Z",
+    "sfi": 190,
+    "k_index": 5,
+    "kp_history": [
+     [
+      "2026-02-06T20:03:57.415806Z",
+      1.67
+     ],
+     [
+      "2026-02-06T17:03:57.415806Z",
+      1.67
+     ],
+     [
+      "2026-02-06T14:03:57.415806Z",
+      1.67
+     ],
+     [
+      "2026-02-06T11:03:57.415806Z",
+      1.67
+     ],
+     [
+      "2026-02-06T08:03:57.415806Z",
+      1.67
+     ],
+     [
+      "2026-02-06T05:03:57.415806Z",
+      1.67
+     ],
+     [
+      "2026-02-06T02:03:57.415806Z",
+      1.67
+     ],
+     [
+      "2026-02-05T23:03:57.415806Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-02-15T10:00:00Z",
+    "sfi": 115,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-02-15T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-15T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-15T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-14T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-14T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-14T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-14T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-02-14T10:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-02-24T11:38:32.115371Z",
+    "sfi": 105,
+    "k_index": 7,
+    "kp_history": [
+     [
+      "2026-02-24T08:38:32.115371Z",
+      1.67
+     ],
+     [
+      "2026-02-24T05:38:32.115371Z",
+      1.67
+     ],
+     [
+      "2026-02-24T02:38:32.115371Z",
+      1.67
+     ],
+     [
+      "2026-02-23T23:38:32.115371Z",
+      1.67
+     ],
+     [
+      "2026-02-23T20:38:32.115371Z",
+      1.67
+     ],
+     [
+      "2026-02-23T17:38:32.115371Z",
+      1.67
+     ],
+     [
+      "2026-02-23T14:38:32.115371Z",
+      1.67
+     ],
+     [
+      "2026-02-23T11:38:32.115371Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-03-05T23:29:39.131433Z",
+    "sfi": 122,
+    "k_index": 0,
+    "kp_history": [
+     [
+      "2026-03-05T20:29:39.131433Z",
+      1.67
+     ],
+     [
+      "2026-03-05T17:29:39.131433Z",
+      1.67
+     ],
+     [
+      "2026-03-05T14:29:39.131433Z",
+      1.67
+     ],
+     [
+      "2026-03-05T11:29:39.131433Z",
+      1.67
+     ],
+     [
+      "2026-03-05T08:29:39.131433Z",
+      1.67
+     ],
+     [
+      "2026-03-05T05:29:39.131433Z",
+      1.67
+     ],
+     [
+      "2026-03-05T02:29:39.131433Z",
+      1.67
+     ],
+     [
+      "2026-03-04T23:29:39.131433Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-03-05T23:54:59.845280Z",
+    "sfi": 130,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-03-05T20:54:59.845280Z",
+      1.67
+     ],
+     [
+      "2026-03-05T17:54:59.845280Z",
+      1.67
+     ],
+     [
+      "2026-03-05T14:54:59.845280Z",
+      1.67
+     ],
+     [
+      "2026-03-05T11:54:59.845280Z",
+      1.67
+     ],
+     [
+      "2026-03-05T08:54:59.845280Z",
+      1.67
+     ],
+     [
+      "2026-03-05T05:54:59.845280Z",
+      1.67
+     ],
+     [
+      "2026-03-05T02:54:59.845280Z",
+      1.67
+     ],
+     [
+      "2026-03-04T23:54:59.845280Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-03-14T00:00:00Z",
+    "sfi": 115,
+    "k_index": 4.67,
+    "kp_history": [
+     [
+      "2026-03-13T21:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-13T18:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-13T15:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-13T12:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-13T09:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-13T06:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-13T03:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-13T00:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-03-15T00:59:57.212562Z",
+    "sfi": 122,
+    "k_index": 4,
+    "kp_history": [
+     [
+      "2026-03-14T21:59:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T18:59:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T15:59:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T12:59:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T09:59:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T06:59:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T03:59:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T00:59:57.212562Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-03-15T01:01:57.212562Z",
+    "sfi": 122,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2026-03-14T22:01:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T19:01:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T16:01:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T13:01:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T10:01:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T07:01:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T04:01:57.212562Z",
+      1.67
+     ],
+     [
+      "2026-03-14T01:01:57.212562Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-03-23T10:27:31.544382Z",
+    "sfi": 145,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-03-23T07:27:31.544382Z",
+      1.67
+     ],
+     [
+      "2026-03-23T04:27:31.544382Z",
+      1.67
+     ],
+     [
+      "2026-03-23T01:27:31.544382Z",
+      1.67
+     ],
+     [
+      "2026-03-22T22:27:31.544382Z",
+      1.67
+     ],
+     [
+      "2026-03-22T19:27:31.544382Z",
+      1.67
+     ],
+     [
+      "2026-03-22T16:27:31.544382Z",
+      1.67
+     ],
+     [
+      "2026-03-22T13:27:31.544382Z",
+      1.67
+     ],
+     [
+      "2026-03-22T10:27:31.544382Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-03-23T23:43:27.583468Z",
+    "sfi": 160,
+    "k_index": 4.67,
+    "kp_history": [
+     [
+      "2026-03-23T20:43:27.583468Z",
+      1.67
+     ],
+     [
+      "2026-03-23T17:43:27.583468Z",
+      1.67
+     ],
+     [
+      "2026-03-23T14:43:27.583468Z",
+      1.67
+     ],
+     [
+      "2026-03-23T11:43:27.583468Z",
+      1.67
+     ],
+     [
+      "2026-03-23T08:43:27.583468Z",
+      1.67
+     ],
+     [
+      "2026-03-23T05:43:27.583468Z",
+      1.67
+     ],
+     [
+      "2026-03-23T02:43:27.583468Z",
+      1.67
+     ],
+     [
+      "2026-03-22T23:43:27.583468Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-03-24T01:08:46.751000Z",
+    "sfi": 105,
+    "k_index": 4,
+    "kp_history": [
+     [
+      "2026-03-23T22:08:46.751000Z",
+      1.67
+     ],
+     [
+      "2026-03-23T19:08:46.751000Z",
+      1.67
+     ],
+     [
+      "2026-03-23T16:08:46.751000Z",
+      1.67
+     ],
+     [
+      "2026-03-23T13:08:46.751000Z",
+      1.67
+     ],
+     [
+      "2026-03-23T10:08:46.751000Z",
+      1.67
+     ],
+     [
+      "2026-03-23T07:08:46.751000Z",
+      1.67
+     ],
+     [
+      "2026-03-23T04:08:46.751000Z",
+      1.67
+     ],
+     [
+      "2026-03-23T01:08:46.751000Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-01T16:00:00Z",
+    "sfi": 145,
+    "k_index": 4,
+    "kp_history": [
+     [
+      "2026-04-01T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-04-01T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-04-01T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-04-01T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-04-01T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-31T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-31T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-03-31T16:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-01T11:50:01.803356Z",
+    "sfi": 122,
+    "k_index": 8,
+    "kp_history": [
+     [
+      "2026-04-01T08:50:01.803356Z",
+      1.67
+     ],
+     [
+      "2026-04-01T05:50:01.803356Z",
+      1.67
+     ],
+     [
+      "2026-04-01T02:50:01.803356Z",
+      1.67
+     ],
+     [
+      "2026-03-31T23:50:01.803356Z",
+      1.67
+     ],
+     [
+      "2026-03-31T20:50:01.803356Z",
+      1.67
+     ],
+     [
+      "2026-03-31T17:50:01.803356Z",
+      1.67
+     ],
+     [
+      "2026-03-31T14:50:01.803356Z",
+      1.67
+     ],
+     [
+      "2026-03-31T11:50:01.803356Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-01T10:15:29.667905Z",
+    "sfi": 70,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-04-01T07:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-04-01T04:15:29.667905Z",
+      5.33
+     ],
+     [
+      "2026-04-01T01:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-03-31T22:15:29.667905Z",
+      5.33
+     ],
+     [
+      "2026-03-31T19:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-03-31T16:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-03-31T13:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-03-31T10:15:29.667905Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-01T12:15:29.667905Z",
+    "sfi": 115,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-04-01T09:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-04-01T06:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-04-01T03:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-04-01T00:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-03-31T21:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-03-31T18:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-03-31T15:15:29.667905Z",
+      1.67
+     ],
+     [
+      "2026-03-31T12:15:29.667905Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-01T23:48:05.767989Z",
+    "sfi": 105,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-04-01T20:48:05.767989Z",
+      1.67
+     ],
+     [
+      "2026-04-01T17:48:05.767989Z",
+      1.67
+     ],
+     [
+      "2026-04-01T14:48:05.767989Z",
+      1.67
+     ],
+     [
+      "2026-04-01T11:48:05.767989Z",
+      1.67
+     ],
+     [
+      "2026-04-01T08:48:05.767989Z",
+      1.67
+     ],
+     [
+      "2026-04-01T05:48:05.767989Z",
+      1.67
+     ],
+     [
+      "2026-04-01T02:48:05.767989Z",
+      1.67
+     ],
+     [
+      "2026-03-31T23:48:05.767989Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-10T09:40:00.102913Z",
+    "sfi": 70,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-04-10T06:40:00.102913Z",
+      1.67
+     ],
+     [
+      "2026-04-10T03:40:00.102913Z",
+      1.67
+     ],
+     [
+      "2026-04-10T00:40:00.102913Z",
+      1.67
+     ],
+     [
+      "2026-04-09T21:40:00.102913Z",
+      1.67
+     ],
+     [
+      "2026-04-09T18:40:00.102913Z",
+      1.67
+     ],
+     [
+      "2026-04-09T15:40:00.102913Z",
+      1.67
+     ],
+     [
+      "2026-04-09T12:40:00.102913Z",
+      1.67
+     ],
+     [
+      "2026-04-09T09:40:00.102913Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-11T00:20:34.390601Z",
+    "sfi": 115,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2026-04-10T21:20:34.390601Z",
+      1.67
+     ],
+     [
+      "2026-04-10T18:20:34.390601Z",
+      1.67
+     ],
+     [
+      "2026-04-10T15:20:34.390601Z",
+      1.67
+     ],
+     [
+      "2026-04-10T12:20:34.390601Z",
+      5.33
+     ],
+     [
+      "2026-04-10T09:20:34.390601Z",
+      1.67
+     ],
+     [
+      "2026-04-10T06:20:34.390601Z",
+      1.67
+     ],
+     [
+      "2026-04-10T03:20:34.390601Z",
+      1.67
+     ],
+     [
+      "2026-04-10T00:20:34.390601Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-19T10:26:31.165637Z",
+    "sfi": 105,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-04-19T07:26:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-19T04:26:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-19T01:26:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T22:26:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T19:26:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T16:26:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T13:26:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T10:26:31.165637Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-19T10:28:31.165637Z",
+    "sfi": 115,
+    "k_index": 0,
+    "kp_history": [
+     [
+      "2026-04-19T07:28:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-19T04:28:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-19T01:28:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T22:28:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T19:28:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T16:28:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T13:28:31.165637Z",
+      1.67
+     ],
+     [
+      "2026-04-18T10:28:31.165637Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-28T23:35:04.707484Z",
+    "sfi": 70,
+    "k_index": 1,
+    "kp_history": [
+     [
+      "2026-04-28T20:35:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T17:35:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T14:35:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T11:35:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T08:35:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T05:35:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T02:35:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-27T23:35:04.707484Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-04-28T23:37:04.707484Z",
+    "sfi": 145,
+    "k_index": 7,
+    "kp_history": [
+     [
+      "2026-04-28T20:37:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T17:37:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T14:37:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T11:37:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T08:37:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T05:37:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-28T02:37:04.707484Z",
+      1.67
+     ],
+     [
+      "2026-04-27T23:37:04.707484Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-05-07T14:00:00Z",
+    "sfi": 145,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-05-07T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-07T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-07T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-07T02:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-06T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-06T20:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-06T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-06T14:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-05-08T00:44:31.207584Z",
+    "sfi": 105,
+    "k_index": 5,
+    "kp_history": [
+     [
+      "2026-05-07T21:44:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T18:44:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T15:44:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T12:44:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T09:44:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T06:44:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T03:44:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T00:44:31.207584Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-05-08T01:42:31.207584Z",
+    "sfi": 115,
+    "k_index": 0,
+    "kp_history": [
+     [
+      "2026-05-07T22:42:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T19:42:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T16:42:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T13:42:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T10:42:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T07:42:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T04:42:31.207584Z",
+      1.67
+     ],
+     [
+      "2026-05-07T01:42:31.207584Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-05-25T16:00:00Z",
+    "sfi": 130,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2026-05-25T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-25T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-25T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-25T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-25T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-24T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-24T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-05-24T16:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-05-25T09:53:10.890764Z",
+    "sfi": 115,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2026-05-25T06:53:10.890764Z",
+      1.67
+     ],
+     [
+      "2026-05-25T03:53:10.890764Z",
+      1.67
+     ],
+     [
+      "2026-05-25T00:53:10.890764Z",
+      1.67
+     ],
+     [
+      "2026-05-24T21:53:10.890764Z",
+      1.67
+     ],
+     [
+      "2026-05-24T18:53:10.890764Z",
+      1.67
+     ],
+     [
+      "2026-05-24T15:53:10.890764Z",
+      1.67
+     ],
+     [
+      "2026-05-24T12:53:10.890764Z",
+      1.67
+     ],
+     [
+      "2026-05-24T09:53:10.890764Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-05-26T00:30:02.343188Z",
+    "sfi": 90,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-05-25T21:30:02.343188Z",
+      1.67
+     ],
+     [
+      "2026-05-25T18:30:02.343188Z",
+      1.67
+     ],
+     [
+      "2026-05-25T15:30:02.343188Z",
+      1.67
+     ],
+     [
+      "2026-05-25T12:30:02.343188Z",
+      1.67
+     ],
+     [
+      "2026-05-25T09:30:02.343188Z",
+      1.67
+     ],
+     [
+      "2026-05-25T06:30:02.343188Z",
+      1.67
+     ],
+     [
+      "2026-05-25T03:30:02.343188Z",
+      1.67
+     ],
+     [
+      "2026-05-25T00:30:02.343188Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-06-03T10:00:00Z",
+    "sfi": 130,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2026-06-03T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-03T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-03T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-02T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-02T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-02T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-02T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-02T10:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-06-03T08:49:34.818342Z",
+    "sfi": 145,
+    "k_index": 5,
+    "kp_history": [
+     [
+      "2026-06-03T05:49:34.818342Z",
+      1.67
+     ],
+     [
+      "2026-06-03T02:49:34.818342Z",
+      1.67
+     ],
+     [
+      "2026-06-02T23:49:34.818342Z",
+      1.67
+     ],
+     [
+      "2026-06-02T20:49:34.818342Z",
+      1.67
+     ],
+     [
+      "2026-06-02T17:49:34.818342Z",
+      1.67
+     ],
+     [
+      "2026-06-02T14:49:34.818342Z",
+      1.67
+     ],
+     [
+      "2026-06-02T11:49:34.818342Z",
+      1.67
+     ],
+     [
+      "2026-06-02T08:49:34.818342Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-06-03T11:20:39.720143Z",
+    "sfi": 90,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-06-03T08:20:39.720143Z",
+      1.67
+     ],
+     [
+      "2026-06-03T05:20:39.720143Z",
+      1.67
+     ],
+     [
+      "2026-06-03T02:20:39.720143Z",
+      1.67
+     ],
+     [
+      "2026-06-02T23:20:39.720143Z",
+      1.67
+     ],
+     [
+      "2026-06-02T20:20:39.720143Z",
+      1.67
+     ],
+     [
+      "2026-06-02T17:20:39.720143Z",
+      1.67
+     ],
+     [
+      "2026-06-02T14:20:39.720143Z",
+      1.67
+     ],
+     [
+      "2026-06-02T11:20:39.720143Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-06-12T10:48:15.333729Z",
+    "sfi": 130,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-06-12T07:48:15.333729Z",
+      1.67
+     ],
+     [
+      "2026-06-12T04:48:15.333729Z",
+      1.67
+     ],
+     [
+      "2026-06-12T01:48:15.333729Z",
+      1.67
+     ],
+     [
+      "2026-06-11T22:48:15.333729Z",
+      1.67
+     ],
+     [
+      "2026-06-11T19:48:15.333729Z",
+      1.67
+     ],
+     [
+      "2026-06-11T16:48:15.333729Z",
+      1.67
+     ],
+     [
+      "2026-06-11T13:48:15.333729Z",
+      1.67
+     ],
+     [
+      "2026-06-11T10:48:15.333729Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-06-13T01:37:51.355259Z",
+    "sfi": 160,
+    "k_index": 7,
+    "kp_history": [
+     [
+      "2026-06-12T22:37:51.355259Z",
+      1.67
+     ],
+     [
+      "2026-06-12T19:37:51.355259Z",
+      1.67
+     ],
+     [
+      "2026-06-12T16:37:51.355259Z",
+      1.67
+     ],
+     [
+      "2026-06-12T13:37:51.355259Z",
+      1.67
+     ],
+     [
+      "2026-06-12T10:37:51.355259Z",
+      1.67
+     ],
+     [
+      "2026-06-12T07:37:51.355259Z",
+      1.67
+     ],
+     [
+      "2026-06-12T04:37:51.355259Z",
+      1.67
+     ],
+     [
+      "2026-06-12T01:37:51.355259Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-06-21T22:00:00Z",
+    "sfi": 130,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-06-21T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-21T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-21T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-21T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-21T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-21T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-21T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-06-20T22:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-06-22T02:10:05.735029Z",
+    "sfi": 145,
+    "k_index": 0,
+    "kp_history": [
+     [
+      "2026-06-21T23:10:05.735029Z",
+      1.67
+     ],
+     [
+      "2026-06-21T20:10:05.735029Z",
+      5.33
+     ],
+     [
+      "2026-06-21T17:10:05.735029Z",
+      1.67
+     ],
+     [
+      "2026-06-21T14:10:05.735029Z",
+      1.67
+     ],
+     [
+      "2026-06-21T11:10:05.735029Z",
+      1.67
+     ],
+     [
+      "2026-06-21T08:10:05.735029Z",
+      1.67
+     ],
+     [
+      "2026-06-21T05:10:05.735029Z",
+      1.67
+     ],
+     [
+      "2026-06-21T02:10:05.735029Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-07-09T02:00:00Z",
+    "sfi": 145,
+    "k_index": 8,
+    "kp_history": [
+     [
+      "2026-07-08T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T20:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T14:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T02:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-07-09T04:00:00Z",
+    "sfi": 70,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2026-07-09T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T04:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-07-09T16:00:00Z",
+    "sfi": 145,
+    "k_index": 4,
+    "kp_history": [
+     [
+      "2026-07-09T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-09T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-09T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-09T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-09T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-07-08T16:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-07-09T08:56:42.339831Z",
+    "sfi": 160,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-07-09T05:56:42.339831Z",
+      1.67
+     ],
+     [
+      "2026-07-09T02:56:42.339831Z",
+      1.67
+     ],
+     [
+      "2026-07-08T23:56:42.339831Z",
+      1.67
+     ],
+     [
+      "2026-07-08T20:56:42.339831Z",
+      1.67
+     ],
+     [
+      "2026-07-08T17:56:42.339831Z",
+      1.67
+     ],
+     [
+      "2026-07-08T14:56:42.339831Z",
+      1.67
+     ],
+     [
+      "2026-07-08T11:56:42.339831Z",
+      1.67
+     ],
+     [
+      "2026-07-08T08:56:42.339831Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-07-09T11:27:47.938239Z",
+    "sfi": 90,
+    "k_index": 8,
+    "kp_history": [
+     [
+      "2026-07-09T08:27:47.938239Z",
+      1.67
+     ],
+     [
+      "2026-07-09T05:27:47.938239Z",
+      1.67
+     ],
+     [
+      "2026-07-09T02:27:47.938239Z",
+      1.67
+     ],
+     [
+      "2026-07-08T23:27:47.938239Z",
+      1.67
+     ],
+     [
+      "2026-07-08T20:27:47.938239Z",
+      1.67
+     ],
+     [
+      "2026-07-08T17:27:47.938239Z",
+      1.67
+     ],
+     [
+      "2026-07-08T14:27:47.938239Z",
+      1.67
+     ],
+     [
+      "2026-07-08T11:27:47.938239Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-07-10T01:42:05.682020Z",
+    "sfi": 190,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-07-09T22:42:05.682020Z",
+      1.67
+     ],
+     [
+      "2026-07-09T19:42:05.682020Z",
+      1.67
+     ],
+     [
+      "2026-07-09T16:42:05.682020Z",
+      1.67
+     ],
+     [
+      "2026-07-09T13:42:05.682020Z",
+      1.67
+     ],
+     [
+      "2026-07-09T10:42:05.682020Z",
+      1.67
+     ],
+     [
+      "2026-07-09T07:42:05.682020Z",
+      1.67
+     ],
+     [
+      "2026-07-09T04:42:05.682020Z",
+      1.67
+     ],
+     [
+      "2026-07-09T01:42:05.682020Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-07-18T11:04:31.592795Z",
+    "sfi": 160,
+    "k_index": 5,
+    "kp_history": [
+     [
+      "2026-07-18T08:04:31.592795Z",
+      1.67
+     ],
+     [
+      "2026-07-18T05:04:31.592795Z",
+      1.67
+     ],
+     [
+      "2026-07-18T02:04:31.592795Z",
+      1.67
+     ],
+     [
+      "2026-07-17T23:04:31.592795Z",
+      1.67
+     ],
+     [
+      "2026-07-17T20:04:31.592795Z",
+      1.67
+     ],
+     [
+      "2026-07-17T17:04:31.592795Z",
+      1.67
+     ],
+     [
+      "2026-07-17T14:04:31.592795Z",
+      1.67
+     ],
+     [
+      "2026-07-17T11:04:31.592795Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-08-05T11:45:26.226945Z",
+    "sfi": 70,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-08-05T08:45:26.226945Z",
+      1.67
+     ],
+     [
+      "2026-08-05T05:45:26.226945Z",
+      1.67
+     ],
+     [
+      "2026-08-05T02:45:26.226945Z",
+      5.33
+     ],
+     [
+      "2026-08-04T23:45:26.226945Z",
+      1.67
+     ],
+     [
+      "2026-08-04T20:45:26.226945Z",
+      1.67
+     ],
+     [
+      "2026-08-04T17:45:26.226945Z",
+      1.67
+     ],
+     [
+      "2026-08-04T14:45:26.226945Z",
+      1.67
+     ],
+     [
+      "2026-08-04T11:45:26.226945Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-08-14T02:00:00Z",
+    "sfi": 115,
+    "k_index": 7,
+    "kp_history": [
+     [
+      "2026-08-13T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-13T20:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-13T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-13T14:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-13T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-13T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-13T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-13T02:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-09-01T06:00:00Z",
+    "sfi": 115,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-09-01T03:00:00Z",
+      1.67
+     ],
+     [
+      "2026-09-01T00:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-31T21:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-31T18:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-31T15:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-31T12:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-31T09:00:00Z",
+      1.67
+     ],
+     [
+      "2026-08-31T06:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-09-10T20:00:00Z",
+    "sfi": 115,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-09-10T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-09-10T14:00:00Z",
+      1.67
+     ],
+     [
+      "2026-09-10T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-09-10T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-09-10T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-09-10T02:00:00Z",
+      1.67
+     ],
+     [
+      "2026-09-09T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-09-09T20:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-09-11T00:06:08.143750Z",
+    "sfi": 145,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-09-10T21:06:08.143750Z",
+      1.67
+     ],
+     [
+      "2026-09-10T18:06:08.143750Z",
+      1.67
+     ],
+     [
+      "2026-09-10T15:06:08.143750Z",
+      1.67
+     ],
+     [
+      "2026-09-10T12:06:08.143750Z",
+      1.67
+     ],
+     [
+      "2026-09-10T09:06:08.143750Z",
+      1.67
+     ],
+     [
+      "2026-09-10T06:06:08.143750Z",
+      1.67
+     ],
+     [
+      "2026-09-10T03:06:08.143750Z",
+      1.67
+     ],
+     [
+      "2026-09-10T00:06:08.143750Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-09-28T10:55:00.731296Z",
+    "sfi": 122,
+    "k_index": 7,
+    "kp_history": [
+     [
+      "2026-09-28T07:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-28T04:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-28T01:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T22:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T19:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T16:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T13:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T10:55:00.731296Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-09-28T11:55:00.731296Z",
+    "sfi": 130,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-09-28T08:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-28T05:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-28T02:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T23:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T20:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T17:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T14:55:00.731296Z",
+      1.67
+     ],
+     [
+      "2026-09-27T11:55:00.731296Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-09-28T23:17:54.764994Z",
+    "sfi": 190,
+    "k_index": 4,
+    "kp_history": [
+     [
+      "2026-09-28T20:17:54.764994Z",
+      1.67
+     ],
+     [
+      "2026-09-28T17:17:54.764994Z",
+      1.67
+     ],
+     [
+      "2026-09-28T14:17:54.764994Z",
+      1.67
+     ],
+     [
+      "2026-09-28T11:17:54.764994Z",
+      1.67
+     ],
+     [
+      "2026-09-28T08:17:54.764994Z",
+      1.67
+     ],
+     [
+      "2026-09-28T05:17:54.764994Z",
+      1.67
+     ],
+     [
+      "2026-09-28T02:17:54.764994Z",
+      1.67
+     ],
+     [
+      "2026-09-27T23:17:54.764994Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-09-28T22:41:08.298873Z",
+    "sfi": 122,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-09-28T19:41:08.298873Z",
+      1.67
+     ],
+     [
+      "2026-09-28T16:41:08.298873Z",
+      1.67
+     ],
+     [
+      "2026-09-28T13:41:08.298873Z",
+      1.67
+     ],
+     [
+      "2026-09-28T10:41:08.298873Z",
+      1.67
+     ],
+     [
+      "2026-09-28T07:41:08.298873Z",
+      1.67
+     ],
+     [
+      "2026-09-28T04:41:08.298873Z",
+      1.67
+     ],
+     [
+      "2026-09-28T01:41:08.298873Z",
+      1.67
+     ],
+     [
+      "2026-09-27T22:41:08.298873Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-10-07T02:00:00Z",
+    "sfi": 145,
+    "k_index": 1,
+    "kp_history": [
+     [
+      "2026-10-06T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T20:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T14:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T02:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-10-07T14:00:00Z",
+    "sfi": 115,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-10-07T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-07T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-07T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-07T02:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T20:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-06T14:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-10-07T22:31:12.184275Z",
+    "sfi": 70,
+    "k_index": 4,
+    "kp_history": [
+     [
+      "2026-10-07T19:31:12.184275Z",
+      1.67
+     ],
+     [
+      "2026-10-07T16:31:12.184275Z",
+      1.67
+     ],
+     [
+      "2026-10-07T13:31:12.184275Z",
+      1.67
+     ],
+     [
+      "2026-10-07T10:31:12.184275Z",
+      1.67
+     ],
+     [
+      "2026-10-07T07:31:12.184275Z",
+      1.67
+     ],
+     [
+      "2026-10-07T04:31:12.184275Z",
+      1.67
+     ],
+     [
+      "2026-10-07T01:31:12.184275Z",
+      1.67
+     ],
+     [
+      "2026-10-06T22:31:12.184275Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-10-16T10:33:26.324349Z",
+    "sfi": 90,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-10-16T07:33:26.324349Z",
+      1.67
+     ],
+     [
+      "2026-10-16T04:33:26.324349Z",
+      1.67
+     ],
+     [
+      "2026-10-16T01:33:26.324349Z",
+      1.67
+     ],
+     [
+      "2026-10-15T22:33:26.324349Z",
+      1.67
+     ],
+     [
+      "2026-10-15T19:33:26.324349Z",
+      1.67
+     ],
+     [
+      "2026-10-15T16:33:26.324349Z",
+      1.67
+     ],
+     [
+      "2026-10-15T13:33:26.324349Z",
+      1.67
+     ],
+     [
+      "2026-10-15T10:33:26.324349Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-10-25T18:00:00Z",
+    "sfi": 130,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-10-25T15:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-25T12:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-25T09:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-25T06:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-25T03:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-25T00:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-24T21:00:00Z",
+      1.67
+     ],
+     [
+      "2026-10-24T18:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-10-25T12:42:43.007618Z",
+    "sfi": 190,
+    "k_index": 3.33,
+    "kp_history": [
+     [
+      "2026-10-25T09:42:43.007618Z",
+      1.67
+     ],
+     [
+      "2026-10-25T06:42:43.007618Z",
+      1.67
+     ],
+     [
+      "2026-10-25T03:42:43.007618Z",
+      1.67
+     ],
+     [
+      "2026-10-25T00:42:43.007618Z",
+      1.67
+     ],
+     [
+      "2026-10-24T21:42:43.007618Z",
+      1.67
+     ],
+     [
+      "2026-10-24T18:42:43.007618Z",
+      1.67
+     ],
+     [
+      "2026-10-24T15:42:43.007618Z",
+      1.67
+     ],
+     [
+      "2026-10-24T12:42:43.007618Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "good",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "fair",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-10-25T22:08:13.540602Z",
+    "sfi": 145,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-10-25T19:08:13.540602Z",
+      1.67
+     ],
+     [
+      "2026-10-25T16:08:13.540602Z",
+      1.67
+     ],
+     [
+      "2026-10-25T13:08:13.540602Z",
+      1.67
+     ],
+     [
+      "2026-10-25T10:08:13.540602Z",
+      1.67
+     ],
+     [
+      "2026-10-25T07:08:13.540602Z",
+      1.67
+     ],
+     [
+      "2026-10-25T04:08:13.540602Z",
+      1.67
+     ],
+     [
+      "2026-10-25T01:08:13.540602Z",
+      1.67
+     ],
+     [
+      "2026-10-24T22:08:13.540602Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-03T10:00:00Z",
+    "sfi": 122,
+    "k_index": 0,
+    "kp_history": [
+     [
+      "2026-11-03T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-03T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-03T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-02T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-02T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-02T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-02T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-02T10:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-03T22:33:38.183603Z",
+    "sfi": 122,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-11-03T19:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T16:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T13:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T10:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T07:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T04:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T01:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-02T22:33:38.183603Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-03T23:33:38.183603Z",
+    "sfi": 70,
+    "k_index": 0,
+    "kp_history": [
+     [
+      "2026-11-03T20:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T17:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T14:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T11:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T08:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T05:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-03T02:33:38.183603Z",
+      1.67
+     ],
+     [
+      "2026-11-02T23:33:38.183603Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 1.0,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-03T22:59:54.022774Z",
+    "sfi": 105,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-11-03T19:59:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T16:59:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T13:59:54.022774Z",
+      5.33
+     ],
+     [
+      "2026-11-03T10:59:54.022774Z",
+      5.33
+     ],
+     [
+      "2026-11-03T07:59:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T04:59:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T01:59:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-02T22:59:54.022774Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-03T23:01:54.022774Z",
+    "sfi": 90,
+    "k_index": 4.67,
+    "kp_history": [
+     [
+      "2026-11-03T20:01:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T17:01:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T14:01:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T11:01:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T08:01:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T05:01:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-03T02:01:54.022774Z",
+      1.67
+     ],
+     [
+      "2026-11-02T23:01:54.022774Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-12T14:00:00Z",
+    "sfi": 145,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-11-12T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-12T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-12T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-12T02:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-11T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-11T20:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-11T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-11T14:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-12T16:00:00Z",
+    "sfi": 90,
+    "k_index": 8,
+    "kp_history": [
+     [
+      "2026-11-12T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-12T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-12T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-12T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-12T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-11T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-11T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-11T16:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.3,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-12T21:28:44.070394Z",
+    "sfi": 115,
+    "k_index": 2,
+    "kp_history": [
+     [
+      "2026-11-12T18:28:44.070394Z",
+      5.33
+     ],
+     [
+      "2026-11-12T15:28:44.070394Z",
+      1.67
+     ],
+     [
+      "2026-11-12T12:28:44.070394Z",
+      5.33
+     ],
+     [
+      "2026-11-12T09:28:44.070394Z",
+      1.67
+     ],
+     [
+      "2026-11-12T06:28:44.070394Z",
+      1.67
+     ],
+     [
+      "2026-11-12T03:28:44.070394Z",
+      1.67
+     ],
+     [
+      "2026-11-12T00:28:44.070394Z",
+      1.67
+     ],
+     [
+      "2026-11-11T21:28:44.070394Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-21T11:39:50.156380Z",
+    "sfi": 105,
+    "k_index": 4.67,
+    "kp_history": [
+     [
+      "2026-11-21T08:39:50.156380Z",
+      1.67
+     ],
+     [
+      "2026-11-21T05:39:50.156380Z",
+      5.33
+     ],
+     [
+      "2026-11-21T02:39:50.156380Z",
+      1.67
+     ],
+     [
+      "2026-11-20T23:39:50.156380Z",
+      1.67
+     ],
+     [
+      "2026-11-20T20:39:50.156380Z",
+      1.67
+     ],
+     [
+      "2026-11-20T17:39:50.156380Z",
+      1.67
+     ],
+     [
+      "2026-11-20T14:39:50.156380Z",
+      1.67
+     ],
+     [
+      "2026-11-20T11:39:50.156380Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-21T11:05:02.459829Z",
+    "sfi": 90,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-11-21T08:05:02.459829Z",
+      1.67
+     ],
+     [
+      "2026-11-21T05:05:02.459829Z",
+      1.67
+     ],
+     [
+      "2026-11-21T02:05:02.459829Z",
+      1.67
+     ],
+     [
+      "2026-11-20T23:05:02.459829Z",
+      1.67
+     ],
+     [
+      "2026-11-20T20:05:02.459829Z",
+      1.67
+     ],
+     [
+      "2026-11-20T17:05:02.459829Z",
+      1.67
+     ],
+     [
+      "2026-11-20T14:05:02.459829Z",
+      1.67
+     ],
+     [
+      "2026-11-20T11:05:02.459829Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-30T20:00:00Z",
+    "sfi": 90,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-11-30T17:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-30T14:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-30T11:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-30T08:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-30T05:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-30T02:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-29T23:00:00Z",
+      1.67
+     ],
+     [
+      "2026-11-29T20:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-30T12:47:31.017328Z",
+    "sfi": 70,
+    "k_index": 5,
+    "kp_history": [
+     [
+      "2026-11-30T09:47:31.017328Z",
+      1.67
+     ],
+     [
+      "2026-11-30T06:47:31.017328Z",
+      1.67
+     ],
+     [
+      "2026-11-30T03:47:31.017328Z",
+      1.67
+     ],
+     [
+      "2026-11-30T00:47:31.017328Z",
+      1.67
+     ],
+     [
+      "2026-11-29T21:47:31.017328Z",
+      1.67
+     ],
+     [
+      "2026-11-29T18:47:31.017328Z",
+      1.67
+     ],
+     [
+      "2026-11-29T15:47:31.017328Z",
+      1.67
+     ],
+     [
+      "2026-11-29T12:47:31.017328Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-11-30T12:15:08.500784Z",
+    "sfi": 90,
+    "k_index": 4,
+    "kp_history": [
+     [
+      "2026-11-30T09:15:08.500784Z",
+      1.67
+     ],
+     [
+      "2026-11-30T06:15:08.500784Z",
+      1.67
+     ],
+     [
+      "2026-11-30T03:15:08.500784Z",
+      1.67
+     ],
+     [
+      "2026-11-30T00:15:08.500784Z",
+      1.67
+     ],
+     [
+      "2026-11-29T21:15:08.500784Z",
+      1.67
+     ],
+     [
+      "2026-11-29T18:15:08.500784Z",
+      1.67
+     ],
+     [
+      "2026-11-29T15:15:08.500784Z",
+      1.67
+     ],
+     [
+      "2026-11-29T12:15:08.500784Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-12-09T10:00:00Z",
+    "sfi": 115,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-12-09T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-09T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-09T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-08T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-08T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-08T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-08T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-08T10:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-12-09T22:00:00Z",
+    "sfi": 130,
+    "k_index": 5,
+    "kp_history": [
+     [
+      "2026-12-09T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-09T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-09T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-09T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-09T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-09T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-09T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-08T22:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-12-09T22:19:47.845750Z",
+    "sfi": 130,
+    "k_index": 2.67,
+    "kp_history": [
+     [
+      "2026-12-09T19:19:47.845750Z",
+      1.67
+     ],
+     [
+      "2026-12-09T16:19:47.845750Z",
+      1.67
+     ],
+     [
+      "2026-12-09T13:19:47.845750Z",
+      1.67
+     ],
+     [
+      "2026-12-09T10:19:47.845750Z",
+      1.67
+     ],
+     [
+      "2026-12-09T07:19:47.845750Z",
+      1.67
+     ],
+     [
+      "2026-12-09T04:19:47.845750Z",
+      1.67
+     ],
+     [
+      "2026-12-09T01:19:47.845750Z",
+      1.67
+     ],
+     [
+      "2026-12-08T22:19:47.845750Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "20m",
+       "status": "good",
+       "tod": "dusk"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "dusk"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dusk"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dusk"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-12-18T16:00:00Z",
+    "sfi": 130,
+    "k_index": 4,
+    "kp_history": [
+     [
+      "2026-12-18T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-18T10:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-18T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-18T04:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-18T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-17T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-17T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-17T16:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.8,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "12m",
+       "status": "fair",
+       "tod": "day"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "day"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-12-18T11:28:30.136582Z",
+    "sfi": 190,
+    "k_index": 6,
+    "kp_history": [
+     [
+      "2026-12-18T08:28:30.136582Z",
+      1.67
+     ],
+     [
+      "2026-12-18T05:28:30.136582Z",
+      1.67
+     ],
+     [
+      "2026-12-18T02:28:30.136582Z",
+      1.67
+     ],
+     [
+      "2026-12-17T23:28:30.136582Z",
+      1.67
+     ],
+     [
+      "2026-12-17T20:28:30.136582Z",
+      1.67
+     ],
+     [
+      "2026-12-17T17:28:30.136582Z",
+      1.67
+     ],
+     [
+      "2026-12-17T14:28:30.136582Z",
+      1.67
+     ],
+     [
+      "2026-12-17T11:28:30.136582Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.5,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-12-27T10:00:00Z",
+    "sfi": 130,
+    "k_index": 5,
+    "kp_history": [
+     [
+      "2026-12-27T07:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-27T04:00:00Z",
+      5.33
+     ],
+     [
+      "2026-12-27T01:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-26T22:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-26T19:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-26T16:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-26T13:00:00Z",
+      1.67
+     ],
+     [
+      "2026-12-26T10:00:00Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.7,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "80m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "40m",
+       "status": "good",
+       "tod": "night"
+      },
+      {
+       "band": "30m",
+       "status": "fair",
+       "tod": "night"
+      },
+      {
+       "band": "20m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "17m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "15m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "night"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "night"
+      }
+     ]
+    }
+   },
+   {
+    "when_utc": "2026-12-27T13:04:37.516444Z",
+    "sfi": 122,
+    "k_index": 3,
+    "kp_history": [
+     [
+      "2026-12-27T10:04:37.516444Z",
+      1.67
+     ],
+     [
+      "2026-12-27T07:04:37.516444Z",
+      1.67
+     ],
+     [
+      "2026-12-27T04:04:37.516444Z",
+      1.67
+     ],
+     [
+      "2026-12-27T01:04:37.516444Z",
+      1.67
+     ],
+     [
+      "2026-12-26T22:04:37.516444Z",
+      1.67
+     ],
+     [
+      "2026-12-26T19:04:37.516444Z",
+      1.67
+     ],
+     [
+      "2026-12-26T16:04:37.516444Z",
+      1.67
+     ],
+     [
+      "2026-12-26T13:04:37.516444Z",
+      1.67
+     ]
+    ],
+    "expected": {
+     "penalty": 0.9,
+     "bands": [
+      {
+       "band": "160m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "80m",
+       "status": "poor",
+       "tod": "day"
+      },
+      {
+       "band": "40m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "30m",
+       "status": "good",
+       "tod": "dawn"
+      },
+      {
+       "band": "20m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "17m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "15m",
+       "status": "fair",
+       "tod": "dawn"
+      },
+      {
+       "band": "12m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "10m",
+       "status": "poor",
+       "tod": "dawn"
+      },
+      {
+       "band": "6m",
+       "status": "poor",
+       "tod": "dawn"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "elsewhere": [
+  {
+   "location": "Dayton OH EN79",
+   "lat": 39.76,
+   "lon": -84.19,
+   "tz": "America/New_York",
+   "when_utc": "2026-06-27T18:00:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "80m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "40m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "17m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "12m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "10m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "day"
+     }
+    ]
+   }
+  },
+  {
+   "location": "Dayton OH EN79",
+   "lat": 39.76,
+   "lon": -84.19,
+   "tz": "America/New_York",
+   "when_utc": "2026-06-27T23:30:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "80m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "40m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "17m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "12m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "10m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "day"
+     }
+    ]
+   }
+  },
+  {
+   "location": "Dayton OH EN79",
+   "lat": 39.76,
+   "lon": -84.19,
+   "tz": "America/New_York",
+   "when_utc": "2027-01-24T15:00:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "80m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "40m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "17m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "12m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "10m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "day"
+     }
+    ]
+   }
+  },
+  {
+   "location": "Bend OR CN94",
+   "lat": 44.06,
+   "lon": -121.31,
+   "tz": "America/Los_Angeles",
+   "when_utc": "2026-06-27T18:00:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "80m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "40m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "17m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "12m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "10m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "day"
+     }
+    ]
+   }
+  },
+  {
+   "location": "Bend OR CN94",
+   "lat": 44.06,
+   "lon": -121.31,
+   "tz": "America/Los_Angeles",
+   "when_utc": "2026-06-27T23:30:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "80m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "40m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "17m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "12m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "10m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "day"
+     }
+    ]
+   }
+  },
+  {
+   "location": "Bend OR CN94",
+   "lat": 44.06,
+   "lon": -121.31,
+   "tz": "America/Los_Angeles",
+   "when_utc": "2027-01-24T15:00:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "80m",
+      "status": "good",
+      "tod": "night"
+     },
+     {
+      "band": "40m",
+      "status": "fair",
+      "tod": "dawn"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "dawn"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "dawn"
+     },
+     {
+      "band": "17m",
+      "status": "good",
+      "tod": "dawn"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "dawn"
+     },
+     {
+      "band": "12m",
+      "status": "fair",
+      "tod": "dawn"
+     },
+     {
+      "band": "10m",
+      "status": "fair",
+      "tod": "dawn"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "dawn"
+     }
+    ]
+   }
+  },
+  {
+   "location": "Anchorage AK BP51",
+   "lat": 61.22,
+   "lon": -149.9,
+   "tz": "America/Anchorage",
+   "when_utc": "2026-06-27T18:00:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "80m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "40m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "17m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "12m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "10m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "day"
+     }
+    ]
+   }
+  },
+  {
+   "location": "Anchorage AK BP51",
+   "lat": 61.22,
+   "lon": -149.9,
+   "tz": "America/Anchorage",
+   "when_utc": "2026-06-27T23:30:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "80m",
+      "status": "poor",
+      "tod": "day"
+     },
+     {
+      "band": "40m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "17m",
+      "status": "good",
+      "tod": "day"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "12m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "10m",
+      "status": "fair",
+      "tod": "day"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "day"
+     }
+    ]
+   }
+  },
+  {
+   "location": "Anchorage AK BP51",
+   "lat": 61.22,
+   "lon": -149.9,
+   "tz": "America/Anchorage",
+   "when_utc": "2027-01-24T15:00:00Z",
+   "sfi": 125,
+   "k_index": 2,
+   "kp_history": [],
+   "expected": {
+    "penalty": 1.0,
+    "bands": [
+     {
+      "band": "160m",
+      "status": "good",
+      "tod": "night"
+     },
+     {
+      "band": "80m",
+      "status": "good",
+      "tod": "night"
+     },
+     {
+      "band": "40m",
+      "status": "good",
+      "tod": "night"
+     },
+     {
+      "band": "30m",
+      "status": "good",
+      "tod": "night"
+     },
+     {
+      "band": "20m",
+      "status": "good",
+      "tod": "night"
+     },
+     {
+      "band": "17m",
+      "status": "fair",
+      "tod": "night"
+     },
+     {
+      "band": "15m",
+      "status": "fair",
+      "tod": "night"
+     },
+     {
+      "band": "12m",
+      "status": "poor",
+      "tod": "night"
+     },
+     {
+      "band": "10m",
+      "status": "poor",
+      "tod": "night"
+     },
+     {
+      "band": "6m",
+      "status": "poor",
+      "tod": "night"
+     }
+    ]
+   }
+  }
+ ]
+}
