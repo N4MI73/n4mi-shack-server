@@ -23,5 +23,24 @@
     "12m": {"night": [140, 170], "dawn": [110, 140], "day": [100, 130], "dusk": [110, 140]},
     "10m": {"night": [155, 185], "dawn": [120, 150], "day": [105, 140], "dusk": [120, 150]},
     "6m": {"night": [999, 999], "dawn": [160, 190], "day": [150, 185], "dusk": [160, 190]}
+  },
+  "field_day": {
+    "version": "2026-11-17-fd1",
+    "description": "Field Day scale: North America reach (stations within 4,000 km of the station) on the non-WARC Field Day bands. Same score (SFI x geomagnetic penalty) and time-of-day rules as the DX scale; own thresholds. Tuned on Propagation Recorder data at EM83, 2026-11-07 to 11-17 (November, SFI 120-145): suited to Winter Field Day (late January); not validated for ARRL Field Day (June).",
+    "na_reach_km": 4000,
+    "meanings": {
+      "good": "Wide North America coverage: phone contacts across much of the country likely.",
+      "fair": "Some North America reach: workable but thinner or regional; easier on CW/digital.",
+      "poor": "Little or no North America reach."
+    },
+    "bands": {
+      "160m": {"day": [999, 999], "night": [120, 140]},
+      "80m": {"day": [100, 145], "night": [70, 90]},
+      "40m": {"night": [65, 85], "dawn": [55, 110], "day": [110, 160], "dusk": [65, 85]},
+      "20m": {"night": [135, 165], "dawn": [110, 135], "day": [80, 105], "dusk": [60, 85]},
+      "15m": {"night": [130, 160], "dawn": [135, 165], "day": [75, 110], "dusk": [70, 100]},
+      "10m": {"night": [155, 185], "dawn": [125, 155], "day": [75, 110], "dusk": [120, 150]},
+      "6m": {"fixed": "poor", "note": "Sporadic E openings can't be forecast from SFI/K - check the band"}
+    }
   }
 }
