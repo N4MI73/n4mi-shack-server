@@ -1,27 +1,27 @@
 {
-  "model_version": "2026-10-19-stage2",
-  "description": "PropMon band-rating model (Ham Shack Automation). score = SFI x geomagnetic penalty, compared with each band's [fair, good] thresholds for its time of day. Shared with the Ham Ops Console's Field Mode engine; change it here, then bump model_version.",
+  "model_version": "2026-11-17-v3",
+  "description": "PropMon band-rating model (Ham Shack Automation). score = SFI x geomagnetic penalty, compared with each band's [fair, good] thresholds for its time of day. Shared with the Ham Ops Console's Field Mode engine; change it here, then bump model_version. v3 (2026-11-17): tuned against ten days of N4MI's SSB/FT8 sweeps, PSKReporter reports heard in EM83 and logged contacts — 10m/12m/15m thresholds lowered, 40m dawn stricter and day easier, softer storm penalties.",
   "time_of_day": {
     "dawn_dusk_half_width_hours": 1,
     "civil_twilight_bands": ["160m"],
     "sunset_bands": ["80m"]
   },
   "geomagnetic": {
-    "k_tiers": {"0": 1.0, "1": 1.0, "2": 1.0, "3": 0.85, "4": 0.65, "5": 0.45, "6": 0.30, "7": 0.15},
+    "k_tiers": {"0": 1.0, "1": 1.0, "2": 1.0, "3": 0.9, "4": 0.8, "5": 0.7, "6": 0.5, "7": 0.3},
     "recovery_hours": 12,
     "recovery_storm_kp": 5,
-    "recovery_penalty_cap": 0.65
+    "recovery_penalty_cap": 0.8
   },
   "bands": {
     "160m": {"day": [999, 999], "night": [80, 100]},
-    "80m":  {"day": [999, 999], "night": [70, 90]},
-    "40m":  {"night": [70, 90],   "dawn": [75, 95],   "day": [130, 160], "dusk": [75, 95]},
-    "30m":  {"night": [75, 95],   "dawn": [75, 95],   "day": [95, 120],  "dusk": [75, 95]},
-    "20m":  {"night": [95, 125],  "dawn": [85, 110],  "day": [80, 105],  "dusk": [85, 110]},
-    "17m":  {"night": [105, 135], "dawn": [95, 120],  "day": [90, 115],  "dusk": [95, 120]},
-    "15m":  {"night": [120, 150], "dawn": [110, 140], "day": [105, 135], "dusk": [110, 140]},
-    "12m":  {"night": [140, 170], "dawn": [130, 160], "day": [120, 150], "dusk": [130, 160]},
-    "10m":  {"night": [155, 185], "dawn": [145, 175], "day": [130, 165], "dusk": [145, 175]},
-    "6m":   {"night": [999, 999], "dawn": [160, 190], "day": [150, 185], "dusk": [160, 190]}
+    "80m": {"day": [999, 999], "night": [70, 90]},
+    "40m": {"night": [70, 90], "dawn": [75, 130], "day": [110, 160], "dusk": [75, 95]},
+    "30m": {"night": [75, 95], "dawn": [75, 95], "day": [95, 120], "dusk": [75, 95]},
+    "20m": {"night": [95, 125], "dawn": [85, 110], "day": [80, 105], "dusk": [85, 110]},
+    "17m": {"night": [105, 135], "dawn": [95, 120], "day": [90, 115], "dusk": [95, 120]},
+    "15m": {"night": [120, 150], "dawn": [100, 130], "day": [95, 130], "dusk": [110, 140]},
+    "12m": {"night": [140, 170], "dawn": [110, 140], "day": [100, 130], "dusk": [110, 140]},
+    "10m": {"night": [155, 185], "dawn": [120, 150], "day": [105, 140], "dusk": [120, 150]},
+    "6m": {"night": [999, 999], "dawn": [160, 190], "day": [150, 185], "dusk": [160, 190]}
   }
 }

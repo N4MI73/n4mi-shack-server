@@ -49,7 +49,7 @@ propagation data without it; tower/weather alerts just stay at `NONE`.
 |---|---|
 | `GET /api/instrument/propagation` | Main data endpoint |
 | `GET /healthz` | Liveness check — `{"status": "ok"}` whenever the process is up, regardless of fetch/data state |
-| `GET /api/v2/conditions` | Richer conditions for the dashboard and future displays (added 2026-10-20). Same ratings as v1 plus each band's time of day, geomagnetic penalty and 12-hour recovery state, recent Kp, sun times, Bz, proton/electron flux, aurora, signal noise, geomagnetic field text, NOAA R/S/G scales with the 3-day forecast, and tower detail (every NWS alert, Tempest readings). Additive — v1 is unchanged. Since 2026-11-07 also a top-level `period` (`dawn`/`day`/`dusk`/`night` — the 40m–6m time of day at EM83; 160m and 80m switch only day/night, see `bands[].tod`). On the NOAA fallback (`source: "noaa"`, summary `"Data unavailable"`) the ratings are not usable and `bands[].tod` is null |
+| `GET /api/v2/conditions` | Richer conditions for the dashboard and future displays (added 2026-10-20). Same ratings as v1 plus each band's time of day, geomagnetic penalty and 12-hour recovery state, recent Kp, sun times, Bz, proton/electron flux, aurora, signal noise, geomagnetic field text, NOAA R/S/G scales with the 3-day forecast, and tower detail (every NWS alert, Tempest readings). Additive — v1 is unchanged. Since 2026-11-17 also a top-level `model_version` (the rating model in use). Since 2026-11-07 also a top-level `period` (`dawn`/`day`/`dusk`/`night` — the 40m–6m time of day at EM83; 160m and 80m switch only day/night, see `bands[].tod`). On the NOAA fallback (`source: "noaa"`, summary `"Data unavailable"`) the ratings are not usable and `bands[].tod` is null |
 
 **Consumers** (check each before changing an endpoint): the ESP32 Propagation Monitor and DX Monitor (v1); the Ham Ops Console (v1, moving to v2); the Propagation Dashboard on n4misrv (v2, since 2026-11-07); the Propagation Recorder (v2, temporary). The v1 contract: same 10-band order and names, statuses only `good`/`fair`/`poor`, a non-empty `alerts` array, and the fields `updated`, `summary`, `sfi`, `a_index`, `k_index`, `sunspots`, `xray`, `solar_wind` unchanged.
 
@@ -97,15 +97,25 @@ rather than erroring — a consumer can tell "service is down" (connection refus
 
 ## Band rating
 
-10 bands (160m–6m), rated `good`/`fair`/`poor`. Score = `SFI × geomagnetic_penalty` (1.0× at K≤2,
-0.65× at K≤4, 0.25× above that), compared against per-band, per-time-of-day thresholds.
+10 bands (160m–6m), rated `good`/`fair`/`poor`. **Score = SFI × geomagnetic penalty**, compared
+with each band's `[fair, good]` thresholds for its current time of day at EM83.
 
-Most bands use a fixed UTC-hour day/dawn/night/dusk clock. **160m and 80m are the exception** —
-they compute real civil dusk/dawn for the station's coordinates (EM83) via the `astral` library
-instead, since their day-vs-night thresholds are close to binary and a fixed clock's seasonal
-drift against real sunset was producing impossible ratings on these two bands specifically (fixed
-2026-07-16). If extending this service to new bands, watch for the same failure mode on any band
-with a similarly steep day/night threshold jump.
+**The rating model lives in [`rating_model.json`](rating_model.json)** (since 2026-11-17): band
+thresholds, time-of-day switches and the geomagnetic penalties. PropMon loads it at startup and
+refuses to start if it is missing or invalid. v2 publishes its `model_version`, so a copy of the
+model elsewhere (the Ham Ops Console's Field Mode engine) can tell when it is out of date.
+**To change the model:** edit the file, bump `model_version`, rebuild and redeploy.
+
+- **Time of day (real sun at EM83, `astral`):** 40m–6m: dawn = sunrise ±1 h, dusk = sunset ±1 h,
+  day between, night outside. 80m switches at sunset/sunrise; 160m at civil dusk/dawn.
+- **Geomagnetic penalty (model 2026-11-17-v3):** K0–2 ×1.0, K3 ×0.90, K4 ×0.80, K5 ×0.70,
+  K6 ×0.50, K7+ ×0.30 (fractional Kp rounded). For 12 hours after any 3-hour Kp ≥5 the penalty
+  is no better than ×0.80.
+- **Tuned against on-air data:** the 2026-11-17 values come from ten days of N4MI's SSB/FT8 band
+  sweeps, PSKReporter reports heard in EM83 and logged contacts (Propagation Engine Roadmap,
+  Ham Shack Automation). Rating scale: GOOD = DX on SSB; FAIR = DX on FT8 only, or North
+  America only on SSB; POOR = North America only or nothing, even on FT8.
+- Ratings are a guide to where to listen first, not a verdict — check the bands anyway.
 
 Deliberately out of scope: atmospheric noise/QRN modeling (summer static on 160m/80m/40m).
 PropMon's job is ionospheric band condition only.
@@ -133,6 +143,7 @@ build status.
 ```
 propmon/
   propmon_server.py    Flask app, background fetch threads, band-rating logic
+  rating_model.json    Rating model: thresholds, time-of-day switches, penalties (model_version)
   Dockerfile            Python 3.12-slim, builds from requirements.txt (built by GitHub Actions)
   docker-compose.yml    Portainer stack definition (pulls ghcr.io/n4mi73/propmon)
   requirements.txt      flask, requests, astral

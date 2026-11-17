@@ -191,6 +191,7 @@
   .scales-note.fair { color:var(--fair); }
   .band-detail { font-size:9px; color:var(--muted); margin-left:6px; margin-top:2px; }
   .data-note { font-size:9px; color:var(--muted); margin-top:8px; font-style:italic; }
+  .data-note.fair-note { color:var(--fair); font-style:normal; margin-bottom:-4px; }
 
   /* ── MUF Map (center) ── */
   .map-panel { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; min-height: 420px; }
@@ -351,7 +352,7 @@
 
 <header>
   <div>
-    <div class="callsign">N4MI <span>EM83 &nbsp;·&nbsp; HF + 6M PROPAGATION DASHBOARD <span class="version-tag">v.2026-11-07</span></span></div>
+    <div class="callsign">N4MI <span>EM83 &nbsp;·&nbsp; HF + 6M PROPAGATION DASHBOARD <span class="version-tag">v.2026-11-17</span></span></div>
   </div>
   <div class="header-right">
     <a class="dxmon-btn" href="http://192.168.6.29:8083/" target="_blank">&#9654; DXMON CURATION</a>
@@ -478,6 +479,7 @@
       <div class="scales-title">NOAA SPACE WEATHER SCALES</div>
       <div id="scalesBox"><div class="scales-note">Loading&hellip;</div></div>
     </div>
+    <p class="data-note fair-note"><b>FAIR:</b> DX is often workable on FT8 even when SSB is quiet or North America only.</p>
     <p class="data-note">Ratings: PropMon, for EM83's time of day. Data: HamQSL, NOAA SWPC.</p>
   </div>
 
