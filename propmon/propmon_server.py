@@ -29,6 +29,7 @@ fetch cycle completes.
 
 import json
 import logging
+import math
 import os
 import threading
 import time
@@ -100,7 +101,8 @@ EM83_LOCATION = LocationInfo("Grovetown", "USA", "America/New_York", 33.45, -82.
 # from neighboring bands, not the time-of-day logic itself.
 #
 # Model: geomagnetic penalty multiplies SFI itself (not a hard per-band
-# K-index cutoff): kIdx<=2 -> 1.0x, kIdx<=4 -> 0.65x, else -> 0.25x.
+# K-index cutoff); the tiers are in rating_model.json (originally
+# kIdx<=2 -> 1.0x, kIdx<=4 -> 0.65x, else -> 0.25x).
 # score = sfi * geo_penalty; band is "good" if score >= goodThresh,
 # "fair" if score >= fairThresh, else "poor".
 #
@@ -144,7 +146,8 @@ EM83_LOCATION = LocationInfo("Grovetown", "USA", "America/New_York", 33.45, -82.
 #    +/-1 h, dusk = sunset +/-1 h, day between, night outside (replaces the
 #    fixed 12-22 UTC clock, which drifted 2+ hours against summer sunset).
 # 2. 12-hour storm recovery: if any 3-hour Kp in the last 12 h was storm
-#    level (>=5), the geomagnetic penalty stays at no better than x0.65.
+#    level (>=5), the geomagnetic penalty stays at no better than the
+#    model's recovery cap (x0.65 then; x0.80 from model v3, 2026-11-17).
 # 3. 80m opens at sunset and closes at sunrise ("80m can start working
 #    around dusk"); 160m keeps the civil-twilight switch ("needs total
 #    darkness") and gets stricter night thresholds than 80m.
@@ -187,7 +190,8 @@ def load_rating_model(path: str) -> dict:
             continue
         for t, pair in bands[band].items():
             if (not isinstance(pair, list) or len(pair) != 2
-                    or not all(isinstance(x, (int, float)) for x in pair) or pair[0] > pair[1]):
+                    or not all(isinstance(x, (int, float)) and math.isfinite(x) for x in pair)
+                    or pair[0] > pair[1]):
                 problems.append(f"band {band} {t}: need [fair, good] with fair <= good")
     tiers = geo.get("k_tiers", {})
     vals = [tiers.get(str(k)) for k in range(8)]
